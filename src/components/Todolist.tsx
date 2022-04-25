@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, {FC, useState, KeyboardEvent, ChangeEvent} from "react";
 import {FilterValueType} from "../App";
 
 type TodoListPropsType = {
@@ -16,9 +16,23 @@ export type TaskType = {
 }
 
 export const TodoList: FC<TodoListPropsType> = (props: TodoListPropsType) => {
+    const [title, setTitle] = useState<string>("")
+    const onClickAddTask = () => {
+        const trimmedTitle = title.trim()
+        if (trimmedTitle) {
+            props.addTask(trimmedTitle)
+        }
+        setTitle("")
+    }
+    const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") onClickAddTask()
+    }
+    const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
+    const changeFilter = (filter: FilterValueType) => {
+        return () => props.changeFilter(filter)
+    }
 
-    const [title, setTitle] = useState<string>('')
-    const onClickAddTask = () => props.addTask(title)
+
     const taskListItems = props.tasks.map(t => {
         const onClickRemoveTask = () => props.removeTasks(t.id)
         return (
@@ -29,21 +43,21 @@ export const TodoList: FC<TodoListPropsType> = (props: TodoListPropsType) => {
             </li>
         )
     })
-
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input value={title} onChange={(e) => setTitle(e.currentTarget.value)}/>
+                <input value={title} onChange={onChangeSetTitle} onKeyPress={onKeyPressAddTask}/>
                 <button onClick={onClickAddTask}>+</button>
             </div>
             <ul>
                 {taskListItems}
             </ul>
             <div>
-                <button onClick={() => {props.changeFilter('all')}}>All</button>
-                <button onClick={() => {props.changeFilter('active')}}>Active</button>
-                <button onClick={() => {props.changeFilter('completed')}}>Completed</button>
+                <button onClick={changeFilter('all')}>All</button>
+                <button onClick={changeFilter('active')}>Active</button>
+                <button onClick={changeFilter('completed')}>Completed
+                </button>
             </div>
         </div>
     )
