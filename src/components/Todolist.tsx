@@ -1,11 +1,11 @@
 import React, {FC, useState, KeyboardEvent, ChangeEvent} from "react";
-import {FilterValueType} from "../App";
+import {FilterValuesType} from "../App";
 
 type TodoListPropsType = {
     title: string;
     tasks: Array<TaskType>
-    removeTasks: (tasksID: string) => void
-    changeFilter: (filter: FilterValueType) => void
+    removeTask: (tasksID: string) => void
+    changeFilter: (filter: FilterValuesType) => void
     addTask: (title: string) => void
 }
 
@@ -14,7 +14,6 @@ export type TaskType = {
     title: string,
     isDone: boolean
 }
-//
 
 export const TodoList: FC<TodoListPropsType> = (props: TodoListPropsType) => {
     const [title, setTitle] = useState<string>("")
@@ -29,13 +28,13 @@ export const TodoList: FC<TodoListPropsType> = (props: TodoListPropsType) => {
         if (e.key === "Enter") onClickAddTask()
     }
     const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
-    const changeFilter = (filter: FilterValueType) => {
+    const changeFilter = (filter: FilterValuesType) => {
         return () => props.changeFilter(filter)
     }
 
 
     const taskListItems = props.tasks.map(t => {
-        const onClickRemoveTask = () => props.removeTasks(t.id)
+        const onClickRemoveTask = () => props.removeTask(t.id)
         return (
             <li key={t.id}>
                 <input type="checkbox" checked={t.isDone}/>
