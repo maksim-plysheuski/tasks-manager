@@ -18,21 +18,26 @@ export type TaskType = {
 
 export const TodoList: FC<TodoListPropsType> = (props: TodoListPropsType) => {
     const [title, setTitle] = useState<string>("")
+    const [error, setError] = useState<string | null>(null)
+
     const onClickAddTask = () => {
-        const trimmedTitle = title.trim()
-        if (trimmedTitle) {
-            props.addTask(trimmedTitle)
+        if (title.trim() !== '') {
+            props.addTask(title.trim())
+            setTitle('')
+        } else {
+            setError('Field is required')
         }
-        setTitle("")
     }
+
+
     const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+        setError(null)
         if (e.key === "Enter") onClickAddTask()
     }
     const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
     const changeFilter = (filter: FilterValuesType) => {
         return () => props.changeFilter(filter)
     }
-
 
 
 
@@ -44,9 +49,10 @@ export const TodoList: FC<TodoListPropsType> = (props: TodoListPropsType) => {
 
         return (
             <li key={t.id}>
-                <input onChange={onChangeStatusCheckbox} type="checkbox" checked={t.isDone}/>
+                <input onChange={onChangeStatusCheckbox} type="checkbox" checked={t.isDone} />
                 <span>{t.title}</span>
                 <button onClick={onClickRemoveTask}>X</button>
+
             </li>
         )
     })
@@ -54,8 +60,9 @@ export const TodoList: FC<TodoListPropsType> = (props: TodoListPropsType) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input value={title} onChange={onChangeSetTitle} onKeyPress={onKeyPressAddTask}/>
+                <input className={error ? 'error' : ""} value={title} onChange={onChangeSetTitle} onKeyPress={onKeyPressAddTask}/>
                 <button onClick={onClickAddTask}>+</button>
+                {error && <div className="error-message">{error}</div>}
             </div>
             <ul>
                 {taskListItems}
