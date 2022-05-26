@@ -14,6 +14,7 @@ export type TaskType = {
     title: string,
     isDone: boolean
 }
+//
 
 export const TodoList: FC<TodoListPropsType> = (props: TodoListPropsType) => {
     const [title, setTitle] = useState<string>("")
