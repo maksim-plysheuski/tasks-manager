@@ -36,7 +36,6 @@ function App() {
             {id: v1(), title: "Eggs", isDone: true},]
     });
 
-
     function removeTask(id: string, todoListID: string) {
         let removedTasks = tasks[todoListID].filter(el => el.id !== id)
         setTasks({...tasks, [todoListID]: removedTasks})
@@ -48,18 +47,25 @@ function App() {
 
     }
 
-    function changeStatus(taskId: string, isDone: boolean) {
-        /*let task = tasks.find(t => t.id === taskId);
-        if (task) {
-            task.isDone = isDone;
-        }
+    function changeStatus(taskId: string, isDone: boolean, todoListID: string) {
+        let todolistTasks = tasks[todoListID]
 
-        setTasks([...tasks]);*/
+        let task = todolistTasks.find(e => e.id === taskId)
+
+        if (task) {
+            task.isDone = isDone
+        }
+        setTasks({...tasks})
     }
 
 
-    function changeFilter(value: FilterValuesType) {
-        /*setFilter(value);*/
+    function changeFilter(value: FilterValuesType,  todoListID: string) {
+        let todoList = todoLists.find(e => e.id === todoListID)
+
+        if (todoList) {
+            todoList.filter = value
+        }
+        setTodoLists([...todoLists])
     }
 
     return (
