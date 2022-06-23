@@ -40,7 +40,7 @@ function App() {
             {id: v1(), title: "Eggs", isDone: true},]
     });
 
-    function removeTask(id: string, todoListID: string) {
+    function removeTask(todoListID: string, id: string) {
         setTasks({...tasks, [todoListID]: tasks[todoListID].filter(e => e.id !== id)})
     }
 
