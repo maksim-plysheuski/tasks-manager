@@ -14,7 +14,6 @@ type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-
 function App() {
 
     const todolistID1 = v1()
@@ -44,18 +43,19 @@ function App() {
         setTasks({...tasks, [todoListID]: tasks[todoListID].filter(e => e.id !== id)})
     }
 
-    function addTask(title: string, todoListID: string) {
+    function addTask(todoListID: string, title: string) {
         let task = {id: v1(), title: title, isDone: false};
         setTasks({...tasks, [todoListID]: [task, ...tasks[todoListID]]})
 
     }
 
-    function changeStatus(taskId: string, NewIsDone: boolean, todoListID: string) {
-        setTasks({...tasks, [todoListID]: tasks[todoListID].map(e => e.id === taskId ? {...e, isDone: NewIsDone} : e)})
+    function changeStatus(todoListID: string, taskId: string, NewIsDone: boolean) {
+        setTasks({...tasks, [todoListID]: tasks[todoListID].map(e => e.id
+            === taskId ? {...e, isDone: NewIsDone} : e)})
     }
 
 
-    function changeFilter(value: FilterValuesType,  todoListID: string) {
+    function changeFilter(todoListID: string, value: FilterValuesType) {
         setTodoLists(todoLists.map(e => e.id === todoListID ? {...e, filter: value} : e))
     }
 

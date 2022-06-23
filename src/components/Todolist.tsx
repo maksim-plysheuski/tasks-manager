@@ -12,9 +12,9 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (todoListID: string, id: string) => void
-    changeFilter: (value: FilterValuesType,  todoListID: string) => void
-    addTask: (title: string, todoListID: string) => void
-    changeTaskStatus: (taskId: string, NewIsDone: boolean, todoListID: string) => void
+    changeFilter: (todoListID: string, value: FilterValuesType) => void
+    addTask: (todoListID: string, title: string) => void
+    changeTaskStatus: (todoListID: string, taskId: string, NewIsDone: boolean) => void
     filter: FilterValuesType
     removeTodoList: (todoListID: string) => void
 
@@ -27,7 +27,7 @@ export function Todolist(props: PropsType) {
 
     const addTask = () => {
         if (title.trim() !== "") {
-            props.addTask(title.trim(), props.id);
+            props.addTask(props.id, title.trim());
             setTitle("");
         } else {
             setError("Title is required");
@@ -45,9 +45,9 @@ export function Todolist(props: PropsType) {
         }
     }
 
-    const onAllClickHandler = () => props.changeFilter("all", props.id);
-    const onActiveClickHandler = () => props.changeFilter("active", props.id);
-    const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
+    const onAllClickHandler = () => props.changeFilter(props.id, "all");
+    const onActiveClickHandler = () => props.changeFilter(props.id, "active");
+    const onCompletedClickHandler = () => props.changeFilter(props.id, "completed");
 
     const removeTodolistHandler = () => {
         props.removeTodoList(props.id)
@@ -73,7 +73,7 @@ export function Todolist(props: PropsType) {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(props.id, t.id)
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeTaskStatus(t.id, e.currentTarget.checked, props.id);
+                        props.changeTaskStatus(props.id, t.id, e.currentTarget.checked);
                     }
 
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
