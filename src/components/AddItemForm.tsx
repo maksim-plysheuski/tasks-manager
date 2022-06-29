@@ -5,19 +5,8 @@ type AddItemFormType = {
 }
 
 export const AddItemForm = (props: AddItemFormType) => {
-
-
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
-
-    const addTask = () => {
-        if (title.trim() !== "") {
-            props.addItemTitle(title.trim());
-            setTitle("");
-        } else {
-            setError("Title is required");
-        }
-    }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
@@ -29,7 +18,14 @@ export const AddItemForm = (props: AddItemFormType) => {
             addTask();
         }
     }
-
+    const addTask = () => {
+        if (title.trim() !== "") {
+            props.addItemTitle(title.trim());
+            setTitle("");
+        } else {
+            setError("Title is required");
+        }
+    }
 
 
     return (
