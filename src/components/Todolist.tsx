@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import {FilterValuesType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox, IconButton} from "@mui/material";
+import {Button, ButtonGroup, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@material-ui/icons";
 
 export type TaskType = {
@@ -25,9 +25,6 @@ type PropsType = {
     changeTodolistTitle: (todoListID: string, newTitle: string) => void
 }
 
-function DeleteIcon() {
-    return null;
-}
 
 export function Todolist(props: PropsType) {
 
@@ -75,11 +72,11 @@ export function Todolist(props: PropsType) {
             }
         </ul>
         <div>
-            <Button onClick={onAllClickHandler} variant={props.filter === "all" ? "outlined" : "contained"} color="secondary" size="small">All</Button>
-            <Button onClick={onActiveClickHandler} variant={props.filter === "active" ? "outlined" : "contained"} color="success" size="small" >Active</Button>
-            <Button onClick={onCompletedClickHandler} variant={props.filter === "completed" ? "outlined" : "contained"} color="error" size="small">Completed</Button>
-
-
+            <ButtonGroup variant="text" aria-label="text button group">
+                <Button onClick={onAllClickHandler} variant={props.filter === "all" ? "outlined" : "contained"} color="secondary" size="small">All</Button>
+                <Button onClick={onActiveClickHandler} variant={props.filter === "active" ? "outlined" : "contained"} color="success" size="small" >Active</Button>
+                <Button onClick={onCompletedClickHandler} variant={props.filter === "completed" ? "outlined" : "contained"} color="error" size="small">Completed</Button>
+            </ButtonGroup>
         </div>
     </div>
 }
