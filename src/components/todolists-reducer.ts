@@ -25,6 +25,19 @@ export const todolistReducer = (state: Array<TodoListsType>, action: ActionType)
 }
 
 
+type removeTodoListACType = ReturnType<typeof removeTodoListAC>
+
+export const removeTodoListAC = (todolistId1: string) => {
+    return {
+        type: 'REMOVE-TODOLIST',
+        payload: {
+            id: todolistId1
+        }
+    } as const
+}
+
+
+
 
 
 
