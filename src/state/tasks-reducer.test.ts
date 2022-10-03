@@ -1,6 +1,6 @@
 import {TasksStateType} from "../App"
 import {v1} from "uuid";
-import {addTaskAC, removeTaskAC, tasksReducer} from "./tasks-reducer"
+import {addTaskAC, changeTaskStatusAC, removeTaskAC, tasksReducer} from "./tasks-reducer"
 
 
 test("task should be added in correct todolist", () => {
