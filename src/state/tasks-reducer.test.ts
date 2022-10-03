@@ -25,3 +25,35 @@ test("task should be added in correct todolist", () => {
     expect(endState[todolistID1][0].title).toBe(newTitle)
 
 })
+
+
+test("correct task should be removed", () => {
+    let todolistID1 = v1()
+    let todolistID2 = v1()
+    let newTitle: string = "React"
+
+    let startState: TasksStateType = {
+        [todolistID1]: [
+            {id: "1", title: "HTML&CSS", isDone: true},
+            {id: "2", title: "JS", isDone: true},
+        ],
+        [todolistID2]: [
+            {id: "1", title: "Milk", isDone: false},
+            {id: "2", title: "Butter", isDone: true},
+            {id: "3", title: "Sugar", isDone: false},
+        ]
+    };
+
+    let endState: TasksStateType = tasksReducer(startState, removeTaskAC(todolistID2, "3"))
+
+    expect(endState).toBe({
+        [todolistID1]: [
+            {id: "1", title: "HTML&CSS", isDone: true},
+            {id: "2", title: "JS", isDone: true},
+        ],
+        [todolistID2]: [
+            {id: "1", title: "Milk", isDone: false},
+            {id: "2", title: "Butter", isDone: true},
+        ]
+    })
+})
