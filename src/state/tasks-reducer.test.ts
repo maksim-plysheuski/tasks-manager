@@ -3,21 +3,24 @@ import {TasksStateType} from "../App";
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
 
 
-const startState: TasksStateType = {
-    "todolistId1": [
-        {id: "1", title: "CSS", isDone: false},
-        {id: "2", title: "JS", isDone: true},
-        {id: "3", title: "React", isDone: false}
-    ],
-    "todolistId2": [
-        {id: "1", title: "bread", isDone: false},
-        {id: "2", title: "milk", isDone: true},
-        {id: "3", title: "tea", isDone: false}
-    ]
-};
+let startState: TasksStateType
+
+beforeEach(() => {
+    startState = {
+        "todolistId1": [
+            {id: "1", title: "CSS", isDone: false},
+            {id: "2", title: "JS", isDone: true},
+            {id: "3", title: "React", isDone: false}
+        ],
+        "todolistId2": [
+            {id: "1", title: "bread", isDone: false},
+            {id: "2", title: "milk", isDone: true},
+            {id: "3", title: "tea", isDone: false}
+        ]
+    };
+})
 
 test("correct task should be deleted from correct array", () => {
-
 
     const action = removeTaskAC("todolistId2", "2");
     const endState = tasksReducer(startState, action)
@@ -31,8 +34,6 @@ test("correct task should be deleted from correct array", () => {
 });
 
 test("correct task should be added to correct array", () => {
-
-
 
     const action = addTaskAC("todolistId2", "juce");
     const endState = tasksReducer(startState, action)
@@ -56,7 +57,6 @@ test("status of specified task should be changed", () => {
 });
 
 test("title of specified task should be changed", () => {
-    ;
 
     const action = changeTaskTitleAC("todolistId2", "2", "Milkyway");
     const endState = tasksReducer(startState, action)
@@ -66,6 +66,7 @@ test("title of specified task should be changed", () => {
 });
 
 test("new property with new array should be added when new todolist is added", () => {
+
 
     const action = addTodolistAC("title no matter");
     const endState = tasksReducer(startState, action)
