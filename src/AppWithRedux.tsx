@@ -42,13 +42,13 @@ function App() {
         dispatch(addTaskAC(todoListID, title))
     }*/
 
-    function changeStatus(todoListID: string, taskId: string, newIsDone: boolean) {
+    /*function changeStatus(todoListID: string, taskId: string, newIsDone: boolean) {
         dispatch(changeTaskStatusAC(todoListID, taskId, newIsDone))
-    }
+    }*/
 
-    function changeTaskTitle(todoListID: string, taskId: string, newTitle: string) {
+    /*function changeTaskTitle(todoListID: string, taskId: string, newTitle: string) {
         dispatch(changeTaskTitleAC(todoListID, taskId, newTitle))
-    }
+    }*/
 
    /* function removeTodoList(todoListID: string) {
         let action = removeTodolistAC(todoListID)

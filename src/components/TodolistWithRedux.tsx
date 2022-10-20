@@ -46,7 +46,6 @@ export function TodolistWithRedux({todolistId, title, filter}: PropsType) {
     const changeTodolistTitleHandler = (newTitle: string) => dispatch(changeTodolistTitleAC(todolistId, newTitle))
 
 
-
     return <div>
         <h3>
             <EditableSpan title={title} callback={changeTodolistTitleHandler}/>
@@ -64,7 +63,6 @@ export function TodolistWithRedux({todolistId, title, filter}: PropsType) {
                     }
 
 
-
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                         <Checkbox onChange={onChangeHandler} checked={t.isDone}/>
                         <EditableSpan title={t.title} callback={(newTitle) => changeTaskTitleHandler(t.id, newTitle)}/>
@@ -77,9 +75,12 @@ export function TodolistWithRedux({todolistId, title, filter}: PropsType) {
         </ul>
         <div>
             <ButtonGroup variant="text" aria-label="text button group">
-                <Button onClick={onAllClickHandler} variant={filter === "all" ? "outlined" : "contained"} color="secondary" size="small">All</Button>
-                <Button onClick={onActiveClickHandler} variant={filter === "active" ? "outlined" : "contained"} color="success" size="small" >Active</Button>
-                <Button onClick={onCompletedClickHandler} variant={filter === "completed" ? "outlined" : "contained"} color="error" size="small">Completed</Button>
+                <Button onClick={onAllClickHandler} variant={filter === "all" ? "outlined" : "contained"}
+                        color="secondary" size="small">All</Button>
+                <Button onClick={onActiveClickHandler} variant={filter === "active" ? "outlined" : "contained"}
+                        color="success" size="small">Active</Button>
+                <Button onClick={onCompletedClickHandler} variant={filter === "completed" ? "outlined" : "contained"}
+                        color="error" size="small">Completed</Button>
             </ButtonGroup>
         </div>
     </div>
