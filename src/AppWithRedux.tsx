@@ -1,17 +1,10 @@
 import React from "react";
 import "./App.css";
-import {Todolist, TaskType} from "./components/Todolist";
-import {v1} from "uuid";
+import {TaskType} from "./components/Todolist";
 import {AddItemForm} from "./components/AddItemForm";
 import ButtonAppBar from "./components/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
-import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
-} from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {addTodolistAC} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TodolistWithRedux} from "./components/TodolistWithRedux";
@@ -37,24 +30,19 @@ function App() {
     /*function removeTask(todoListID: string, id: string) {
         dispatch(removeTaskAC(todoListID, id))
     }*/
-
    /* function addTask(todoListID: string, title: string) {
         dispatch(addTaskAC(todoListID, title))
     }*/
-
     /*function changeStatus(todoListID: string, taskId: string, newIsDone: boolean) {
         dispatch(changeTaskStatusAC(todoListID, taskId, newIsDone))
     }*/
-
     /*function changeTaskTitle(todoListID: string, taskId: string, newTitle: string) {
         dispatch(changeTaskTitleAC(todoListID, taskId, newTitle))
     }*/
-
    /* function removeTodoList(todoListID: string) {
         let action = removeTodolistAC(todoListID)
         dispatch(action)
     }*/
-
     /*function changeFilter(todoListID: string, value: FilterValuesType) {
         dispatch(changeTodolistFilterAC(todoListID, value))
     }*/

@@ -1,12 +1,13 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, IconButton, TextField} from "@mui/material";
-import {AddBox} from "@material-ui/icons";
+import {Button, TextField} from "@mui/material";
 
 type AddItemFormType = {
     addItemTitle: (title: string) => void
 }
 
-export const AddItemForm = (props: AddItemFormType) => {
+export const AddItemForm = React.memo((props: AddItemFormType) => {
+    console.log("add item form")
+
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -15,7 +16,7 @@ export const AddItemForm = (props: AddItemFormType) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error !== null) {setError(null)}
         if (e.charCode === 13) {
             addTask();
         }
@@ -46,7 +47,6 @@ export const AddItemForm = (props: AddItemFormType) => {
 
             <Button variant="contained" style={{maxWidth: '40px', maxHeight: '40px', minWidth: '40px', minHeight: '40px'}}
                     onClick={addTask}>+</Button>
-            {/*{error && <div className="error-message">{error}</div>}*/}
         </div>
     )
-}
+})
