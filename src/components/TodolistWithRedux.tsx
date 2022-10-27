@@ -1,13 +1,14 @@
-import React, {ChangeEvent, useCallback} from "react";
+import React, {useCallback} from "react";
 import {FilterValuesType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, ButtonGroup, Checkbox, IconButton} from "@mui/material";
+import {Button, ButtonGroup, IconButton} from "@mui/material";
 import {Delete} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
 import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
+import {addTaskAC} from "../state/tasks-reducer";
+import {Task} from "./Task";
 
 export type TaskType = {
     id: string
@@ -40,7 +41,6 @@ export const TodolistWithRedux = React.memo(({todolistId, title, filter}: PropsT
     const onCompletedClickHandler = () => dispatch(changeTodolistFilterAC(todolistId, "completed"));
     const removeTodolistHandler = () => dispatch(removeTodolistAC(todolistId))
     const addTaskHandler = useCallback((title: string) => dispatch(addTaskAC(todolistId, title)), [dispatch, todolistId])
-    const changeTaskTitleHandler = (taskId: string, newTitle: string) => dispatch(changeTaskTitleAC(todolistId, taskId, newTitle))
     const changeTodolistTitleHandler = (newTitle: string) => dispatch(changeTodolistTitleAC(todolistId, newTitle))
 
 
@@ -54,21 +54,7 @@ export const TodolistWithRedux = React.memo(({todolistId, title, filter}: PropsT
         <AddItemForm addItemTitle={addTaskHandler}/>
         <ul>
             {
-                tasks.map(t => {
-                    const onClickHandler = () => dispatch(removeTaskAC(todolistId, t.id))
-                    const onChangeHandler = () => {
-                        dispatch(changeTaskStatusAC(todolistId, t.id, !t.isDone));
-                    }
-
-
-                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <Checkbox onChange={onChangeHandler} checked={t.isDone}/>
-                        <EditableSpan title={t.title} callback={(newTitle) => changeTaskTitleHandler(t.id, newTitle)}/>
-                        <IconButton onClick={onClickHandler}>
-                            <Delete/>
-                        </IconButton>
-                    </li>
-                })
+                tasks.map(t => <Task key={t.id} todolistId={todolistId} taskId={t.id} title={t.title} isDone={t.isDone} />)
             }
         </ul>
         <div>
