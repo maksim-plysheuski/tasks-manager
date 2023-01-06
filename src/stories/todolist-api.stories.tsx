@@ -33,3 +33,21 @@ export const CreateTodolist = () => {
         </div>
     </div>
 }
+
+export const DeleteTodolist = () => {
+    const [state, setState] = useState<any>(null)
+    const [inputValue, setInputValue] = useState("")
+
+    const deleteTodolist = () => {
+        todolistAPI.deleteTodolist(inputValue)
+            .then((response) => setState(response.data))
+    }
+
+    return <div>
+        {JSON.stringify(state)}
+        <div>
+            <input type="text" placeholder="todolist ID" onChange={(e) => setInputValue(e.currentTarget.value)}/>
+            <button onClick={deleteTodolist}>delete Todolist</button>
+        </div>
+    </div>
+}
