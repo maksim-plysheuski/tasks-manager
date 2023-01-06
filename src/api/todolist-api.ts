@@ -43,5 +43,8 @@ type TaskType = {
 export const todolistAPI = {
     getTodolists() {
         return instance.get<Array<TodolistType>>("todo-lists")
-    }
+    },
+    createTodolist(title: string) {
+        return instance.post<ResponseType<{ item: TodolistType }>>("todo-lists", {title: title})
+    },
 }
