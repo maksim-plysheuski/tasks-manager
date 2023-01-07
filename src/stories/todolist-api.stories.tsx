@@ -70,3 +70,14 @@ export const UpdateTodolistTitle = () => {
         </div>
     </div>
 }
+
+export const GetTasks = () => {
+    const [state, setState] = useState<any>(null)
+    const [id, setId] = useState("")
+
+    const getTasks = () => {
+        todolistAPI.getTasks(id)
+            .then((response) => {
+                setState(response.data)
+            })
+    }
