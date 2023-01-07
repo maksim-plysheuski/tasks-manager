@@ -81,3 +81,11 @@ export const GetTasks = () => {
                 setState(response.data)
             })
     }
+    return <div>
+        {JSON.stringify(state)}
+        <div>
+            <input type="text" placeholder="todolist ID" onChange={(e) => setId(e.currentTarget.value)}/>
+            <button onClick={getTasks}>Get tasks</button>
+        </div>
+    </div>
+}
