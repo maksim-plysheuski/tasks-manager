@@ -29,6 +29,11 @@
     "typescript": "^4.8.4",
     "uuid": "^9.0.0"
   },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(axios|react-day-picker)/)"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -62,6 +67,7 @@
       "last 1 safari version"
     ]
   },
+
   "devDependencies": {
     "@storybook/addon-actions": "^6.5.13",
     "@storybook/addon-essentials": "^6.5.13",

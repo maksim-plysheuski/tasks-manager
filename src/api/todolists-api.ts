@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from 'axios'
 
 
 const instance = axios.create({
@@ -9,7 +9,7 @@ const instance = axios.create({
     }
 })
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     addedDate: string

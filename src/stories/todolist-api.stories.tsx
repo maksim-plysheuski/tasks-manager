@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react"
-import {todolistAPI} from "../api/todolist-api";
+import {ResponseType, todolistsAPI} from "../api/todolists-api"
+import {AxiosResponse} from "axios";
+
 
 
 export default {
@@ -9,7 +11,7 @@ export default {
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistAPI.getTodolists()
+        todolistsAPI.getTodolists()
             .then((response) => setState(response.data))
     }, [])
     return <div>
@@ -22,8 +24,8 @@ export const CreateTodolist = () => {
     const [inputValue, setInputValue] = useState("")
 
     const createTodolist = () => {
-        todolistAPI.createTodolist(inputValue)
-            .then((response) => setState(response.data))
+        todolistsAPI.createTodolist(inputValue)
+            .then((response: AxiosResponse<ResponseType>) => setState(response.data))
     }
     return <div>
         {JSON.stringify(state)}
@@ -39,8 +41,8 @@ export const DeleteTodolist = () => {
     const [inputValue, setInputValue] = useState("")
 
     const deleteTodolist = () => {
-        todolistAPI.deleteTodolist(inputValue)
-            .then((response) => setState(response.data))
+        todolistsAPI.deleteTodolist(inputValue)
+            .then((response: any) => setState(response.data))
     }
 
     return <div>
@@ -58,7 +60,7 @@ export const UpdateTodolistTitle = () => {
     const [title, setTitle] = useState("")
 
     const changeTitle = () => {
-        todolistAPI.updateTodolist(id, title)
+        todolistsAPI.updateTodolist(id, title)
             .then((response) => setState(response.data))
     }
     return <div>
@@ -76,7 +78,7 @@ export const GetTasks = () => {
     const [id, setId] = useState("")
 
     const getTasks = () => {
-        todolistAPI.getTasks(id)
+        todolistsAPI.getTasks(id)
             .then((response) => {
                 setState(response.data)
             })
@@ -96,7 +98,7 @@ export const CreateTask = () => {
     const [title, setTitle] = useState("")
 
     const createTask = () => {
-        todolistAPI.createTask(id, title)
+        todolistsAPI.createTask(id, title)
             .then((response) => {
                 setState(response.data)
             })
@@ -118,7 +120,7 @@ export const DeleteTask = () => {
     const [todolistId, setTodolistId] = useState("")
 
     const deleteTask = () => {
-        todolistAPI.deleteTask(todolistId, taskId)
+        todolistsAPI.deleteTask(todolistId, taskId)
             .then((response) => {
                 setState(response.data)
             })
@@ -129,30 +131,6 @@ export const DeleteTask = () => {
             <input placeholder="todolist ID" value={todolistId} onChange={(e) => setTodolistId(e.currentTarget.value)}/>
             <input placeholder="task ID" value={taskId} onChange={(e) => setTaskId(e.currentTarget.value)}/>
             <button onClick={deleteTask}>delete task</button>
-        </div>
-    </div>
-}
-
-export const UpdateTaskTitle = () => {
-    const [state, setState] = useState<any>(null)
-    const [todolistId, setTodolistId] = useState("")
-    const [taskId, setTaskId] = useState("")
-    const [title, setTitle] = useState("")
-
-    const updateTask = () => {
-        todolistAPI.updateTask(todolistId, taskId, title)
-            .then((response) => {
-                setState(response.data)
-            })
-    }
-
-    return <div>
-        {JSON.stringify(state)}
-        <div>
-            <input type="text" placeholder="todolist ID" onChange={(e) => setTodolistId(e.currentTarget.value)}/>
-            <input type="text" placeholder="task ID" onChange={(e) => setTaskId(e.currentTarget.value)}/>
-            <input type="text" placeholder="new Title" onChange={(e) => setTitle(e.currentTarget.value)}/>
-            <button onClick={updateTask}>update task title</button>
         </div>
     </div>
 }
