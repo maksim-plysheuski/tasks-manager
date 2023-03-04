@@ -34,7 +34,6 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
             addItem();
         }
     }
-
     return <div>
         <TextField variant="outlined"
                    error={!!error}
