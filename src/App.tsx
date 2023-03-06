@@ -48,7 +48,7 @@ function App() {
     const dispatch = useAppDispatch(); //custom hook
 
     const removeTask = useCallback(function (id: string, todolistId: string) {
-        dispatch(removeTasksTC("sdsd", id))
+        dispatch(removeTasksTC(todolistId, id))
     }, []);
 
     const addTask = useCallback(function (title: string, todolistId: string) {
