@@ -103,6 +103,16 @@ export const getTodosTC = (): AppThunk => async dispatch => {
     } catch (e) {
         throw new Error("some error")
     }
+}
 
+
+
+export const removeTodolistTC = (todolistId: string): AppThunk => async dispatch => {
+    await todolistsAPI.deleteTodolist(todolistId)
+    try {
+        dispatch(removeTodolistAC(todolistId))
+    } catch (err) {
+        //some errors
+    }
 }
 
