@@ -83,8 +83,8 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
 export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => {
     return {type: "REMOVE-TODOLIST", id: todolistId}
 }
-export const addTodolistAC = (title: string): AddTodolistActionType => {
-    return {type: "ADD-TODOLIST", title: title, todolistId: v1()}
+export const addTodolistAC = (title: string, todolistId: string): AddTodolistActionType => {
+    return {type: "ADD-TODOLIST", title, todolistId}
 }
 export const changeTodolistTitleAC = (id: string, title: string): ChangeTodolistTitleActionType => {
     return {type: "CHANGE-TODOLIST-TITLE", id: id, title: title}
@@ -106,13 +106,22 @@ export const getTodosTC = (): AppThunk => async dispatch => {
 }
 
 
-
 export const removeTodolistTC = (todolistId: string): AppThunk => async dispatch => {
     await todolistsAPI.deleteTodolist(todolistId)
     try {
         dispatch(removeTodolistAC(todolistId))
     } catch (err) {
-        //some errors
+        throw new Error("some error")
+    }
+}
+
+
+export const addTodolistTC = (title: string): AppThunk => async dispatch => {
+    let response = await todolistsAPI.createTodolist(title)
+    try {
+        dispatch(addTodolistAC(title, response.data.data.item.id))
+    } catch (err) {
+        throw new Error("some error")
     }
 }
 

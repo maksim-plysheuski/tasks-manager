@@ -44,13 +44,13 @@ test("correct task should be added to correct array", () => {
         addedDate: ""
     }
 
-    const action = addTaskAC("todolistId2",newTask);
+    const action = addTaskAC("todolistId2", newTask);
     const endState = tasksReducer(startState, action)
 
     expect(endState["todolistId1"].length).toBe(3);
     expect(endState["todolistId2"].length).toBe(4);
     expect(endState["todolistId2"][0].id).toBeDefined();
-    expect(endState["todolistId2"][0].title).toBe("juce");
+    expect(endState["todolistId2"][0].title).toBe("Homeworks");
     expect(endState["todolistId2"][0].status).toBe(TaskStatuses.New);
 })
 
@@ -72,7 +72,7 @@ test("title of specified task should be changed", () => {
 });
 
 test("new property with new array should be added when new todolist is added", () => {
-    const action = addTodolistAC("title no matter");
+    const action = addTodolistAC("title no matter", "some-ID");
     const endState = tasksReducer(startState, action)
 
 
