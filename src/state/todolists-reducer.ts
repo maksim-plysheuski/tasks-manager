@@ -125,3 +125,12 @@ export const addTodolistTC = (title: string): AppThunk => async dispatch => {
     }
 }
 
+export const changeTodolistTitleTC = (id: string, title: string): AppThunk => async dispatch => {
+    await todolistsAPI.updateTodolist(id, title)
+    try {
+        dispatch(changeTodolistTitleAC(id, title))
+    } catch (e) {
+        //some error
+    }
+}
+
