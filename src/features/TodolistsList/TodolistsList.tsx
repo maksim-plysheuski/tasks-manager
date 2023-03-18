@@ -2,8 +2,8 @@ import React, {useCallback, useEffect} from "react";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
-import {Todolist} from "../../components/Todolist";
-import {addTaskTC, changeTaskTitleTC, removeTasksTC, updateTaskTC} from "../../state/tasks-reducer";
+import {Todolist} from "./Todolist/Todolist";
+import {addTaskTC, changeTaskTitleTC, removeTasksTC, updateTaskTC} from "./tasks-reducer";
 import {TaskStatuses} from "../../api/todolists-api";
 import {
     addTodolistTC,
@@ -11,7 +11,7 @@ import {
     changeTodolistTitleTC,
     FilterValuesType, getTodosTC,
     removeTodolistTC, TodolistDomainType
-} from "../../state/todolists-reducer";
+} from "./todolists-reducer";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {TasksStateType} from "../../app/App";
 

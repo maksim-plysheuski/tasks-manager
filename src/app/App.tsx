@@ -18,7 +18,7 @@ import {
     getTodosTC,
     removeTodolistTC, setTodolistsAC,
     TodolistDomainType
-} from "../state/todolists-reducer"
+} from "../features/TodolistsList/todolists-reducer"
 import {
     addTaskAC,
     addTaskTC,
@@ -26,12 +26,12 @@ import {
     changeTaskTitleAC, changeTaskTitleTC,
     removeTaskAC,
     removeTasksTC, updateTaskTC
-} from "../state/tasks-reducer";
+} from "../features/TodolistsList/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch, useAppSelector} from "./store";
 import {TaskStatuses, TaskType, todolistsAPI} from "../api/todolists-api"
 import {AddItemForm} from "../components/AddItemForm/AddItemForm";
-import {Todolist} from "../components/Todolist";
+import {Todolist} from "../features/TodolistsList/Todolist/Todolist";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 
 
