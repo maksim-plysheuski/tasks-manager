@@ -1,5 +1,5 @@
 import {todolistsAPI, TodolistType} from "../api/todolists-api"
-import {AppThunk} from "./store";
+import {AppThunk} from "../app/store";
 
 export type RemoveTodolistActionType = {
     type: "REMOVE-TODOLIST",
