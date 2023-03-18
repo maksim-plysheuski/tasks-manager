@@ -3,22 +3,21 @@ import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
-import {addTaskTC, changeTaskTitleTC, removeTasksTC, updateTaskTC} from "./tasks-reducer";
+import {addTaskTC, changeTaskTitleTC, removeTasksTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
 import {TaskStatuses} from "../../api/todolists-api";
 import {
     addTodolistTC,
     changeTodolistFilterAC,
     changeTodolistTitleTC,
-    FilterValuesType, getTodosTC,
+    FilterValuesType, fetchTodolistsTC,
     removeTodolistTC, TodolistDomainType
 } from "./todolists-reducer";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {TasksStateType} from "../../app/App";
 
 
 export const TodolistsList: React.FC = () => {
     useEffect(() => {
-        dispatch(getTodosTC())
+        dispatch(fetchTodolistsTC())
     }, [])
 
     const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)

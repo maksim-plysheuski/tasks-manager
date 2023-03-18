@@ -7,7 +7,7 @@ import {Delete} from "@mui/icons-material";
 import {Task} from "./Task/Task"
 import {TaskStatuses, TaskType} from "../../../api/todolists-api";
 import {FilterValuesType} from "../todolists-reducer";
-import {getTasksTC} from "../tasks-reducer";
+import {fetchTasksTC} from "../tasks-reducer";
 import {useAppDispatch} from "../../../app/store";
 
 type PropsType = {
@@ -30,7 +30,7 @@ export const Todolist = React.memo(function (props: PropsType) {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getTasksTC(props.id))
+        dispatch(fetchTasksTC(props.id))
     }, [])
 
     const addTask = useCallback((title: string) => {
