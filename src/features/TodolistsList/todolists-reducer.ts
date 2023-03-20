@@ -1,5 +1,6 @@
 import {todolistsAPI, TodolistType} from "../../api/todolists-api"
 import {AppThunk} from "../../app/store";
+import {setStatusAC, SetStatusType} from "../../app/app-reducer";
 
 
 const initialState: Array<TodolistDomainType> = [
@@ -46,8 +47,11 @@ export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: "SET-T
 
 export const fetchTodolistsTC = (): AppThunk => async dispatch => {
     try {
+        dispatch(setStatusAC('loading'))
         const response = await todolistsAPI.getTodolists()
         dispatch(setTodolistsAC(response.data))
+        dispatch(setStatusAC('succeeded'))
+
     } catch (e) {
         throw new Error("some error")
     }
@@ -93,6 +97,7 @@ export type TodolistActionsType =
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistFilterAC>
     | SetTodolistsActionType
+    | SetStatusType
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistDomainType = TodolistType & {

@@ -3,7 +3,7 @@ import {TasksActionsType, tasksReducer} from "../features/TodolistsList/tasks-re
 import {TodolistActionsType, todolistsReducer} from "../features/TodolistsList/todolists-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {appReducer} from "../state/app-reducer";
+import {appReducer} from "./app-reducer";
 
 //reducer, store
 const rootReducer = combineReducers({
