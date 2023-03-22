@@ -59,9 +59,11 @@ export const fetchTodolistsTC = (): AppThunk => async dispatch => {
 
 
 export const removeTodolistTC = (todolistId: string): AppThunk => async dispatch => {
+    dispatch(setStatusAC('loading'))
     await todolistsAPI.deleteTodolist(todolistId)
     try {
         dispatch(removeTodolistAC(todolistId))
+        dispatch(setStatusAC('succeeded'))
     } catch (err) {
         throw new Error("some error")
     }
@@ -69,18 +71,22 @@ export const removeTodolistTC = (todolistId: string): AppThunk => async dispatch
 
 
 export const addTodolistTC = (title: string): AppThunk => async dispatch => {
+    dispatch(setStatusAC('loading'))
     let response = await todolistsAPI.createTodolist(title)
     try {
         dispatch(addTodolistAC(title, response.data.data.item.id))
+        dispatch(setStatusAC('succeeded'))
     } catch (err) {
         throw new Error("some error")
     }
 }
 
 export const changeTodolistTitleTC = (id: string, title: string): AppThunk => async dispatch => {
+    dispatch(setStatusAC('loading'))
     await todolistsAPI.updateTodolist(id, title)
     try {
         dispatch(changeTodolistTitleAC(id, title))
+        dispatch(setStatusAC('succeeded'))
     } catch (e) {
         //some error
     }
