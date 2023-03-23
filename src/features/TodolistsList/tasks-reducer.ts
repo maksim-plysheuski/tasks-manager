@@ -103,20 +103,27 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<TasksAct
 }
 
 export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<TasksActionsType>) => {
+    dispatch(setStatusAC("loading"))
     todolistsAPI.deleteTask(todolistId, taskId)
         .then((response) => {
             if (response.data.resultCode === 0) {
                 dispatch(removeTaskAC(todolistId, taskId))
+                dispatch(setStatusAC("succeeded"))
             }
         })
 }
 
 export const addTaskTC = (todolistID: string, title: string) => (dispatch: Dispatch<TasksActionsType>) => {
+    dispatch(setStatusAC("loading"))
     todolistsAPI.createTask(todolistID, title)
-        .then((res) => dispatch(addTaskAC(todolistID, res.data.data.item)))
+        .then((res) => {
+            dispatch(addTaskAC(todolistID, res.data.data.item))
+            dispatch(setStatusAC("succeeded"))
+        })
 }
 
 export const updateTaskTC = (todolistId: string, taskId: string, status: TaskStatuses) => (dispatch: Dispatch<TasksActionsType>, getState: () => AppRootStateType) => {
+    dispatch(setStatusAC("loading"))
     const task = getState().tasks[todolistId].find(t => t.id === taskId)
     if (task) {
         let model: UpdateTaskModelType = {
@@ -128,11 +135,15 @@ export const updateTaskTC = (todolistId: string, taskId: string, status: TaskSta
             status
         }
         todolistsAPI.updateTask(todolistId, taskId, model)
-            .then((response => dispatch(changeTaskStatusAC(taskId, status, todolistId))))
+            .then((response => {
+                dispatch(changeTaskStatusAC(taskId, status, todolistId))
+                dispatch(setStatusAC("succeeded"))
+            }))
     }
 }
 
 export const changeTaskTitleTC = (todolistId: string, taskId: string, title: string): AppThunk => async (dispatch, getState) => {
+    dispatch(setStatusAC("loading"))
     let task = getState().tasks[todolistId].find(t => t.id === taskId)
     if (task) {
         let model: UpdateTaskModelType = {
@@ -146,6 +157,7 @@ export const changeTaskTitleTC = (todolistId: string, taskId: string, title: str
         await todolistsAPI.updateTask(todolistId, taskId, model)
         try {
             dispatch(changeTaskTitleAC(taskId, title, todolistId))
+            dispatch(setStatusAC("succeeded"))
         } catch (e) {
             //some error
         }
