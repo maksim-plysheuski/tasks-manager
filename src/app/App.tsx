@@ -10,6 +10,7 @@ import { TodolistsList } from '../features/TodolistsList/TodolistsList';
 import {useAppSelector} from "./store";
 import { RequestStatusType } from './app-reducer';
 import { LinearProgress } from '@mui/material';
+import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                 </Toolbar>
             </AppBar>
             {status === 'loading' && <LinearProgress color="primary" />}
+            <ErrorSnackbar/>
             <Container fixed>
                 <TodolistsList/>
             </Container>
