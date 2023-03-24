@@ -2,7 +2,7 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
     status: 'idle' as RequestStatusType,
-    error: "asdfsdfs" as null | string
+    error: null as null | string
 }
 
 type InitialStateType = typeof initialState
@@ -22,5 +22,5 @@ export const setStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATU
 export const setErrorAC = (error: null | string) => ({type: 'APP/SET-ERROR', error} as const)
 
 export type SetStatusType = ReturnType<typeof setStatusAC>
-export type setErrorType = ReturnType<typeof setErrorAC>
-type ActionsType = SetStatusType | setErrorType
+export type SetErrorType = ReturnType<typeof setErrorAC>
+type ActionsType = SetStatusType | SetErrorType
