@@ -120,7 +120,11 @@ export const addTaskTC = (todolistID: string, title: string) => (dispatch: Dispa
             if (res.data.resultCode === 0) {
                 dispatch(addTaskAC(todolistID, res.data.data.item))
             } else {
-                dispatch(setErrorAC(res.data.messages[0]))
+                if (res.data.messages.length) {
+                    dispatch(setErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setErrorAC("Some error"))
+                }
             }
             dispatch(setStatusAC("idle"))
         })
