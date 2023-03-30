@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
-import {addTaskTC, changeTaskTitleTC, removeTasksTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
+import {addTaskTC, removeTasksTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
 import {TaskStatuses} from "../../api/todolists-api";
 import {
     addTodolistTC,
@@ -33,11 +33,11 @@ export const TodolistsList: React.FC = () => {
     }, []);
 
     const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
-        dispatch(updateTaskTC(todolistId, id, status))
+        dispatch(updateTaskTC(todolistId, id, {status}))
     }, []);
 
     const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
-        dispatch(changeTaskTitleTC(todolistId, id, newTitle))
+        dispatch(updateTaskTC(todolistId, id, {title: newTitle}))
     }, []);
 
     const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {
