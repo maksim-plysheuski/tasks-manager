@@ -2,7 +2,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelTyp
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from "./todolists-reducer"
 import {Dispatch} from "redux";
 import {AppRootStateType, AppThunk} from "../../app/store";
-import {setAppErrorAC, SetErrorType, setAppStatusAC, SetStatusType} from "../../app/app-reducer";
+import {setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType} from "../../app/app-reducer";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
 
@@ -140,7 +140,10 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
             if (response.data.resultCode === 0) {
                 dispatch(updateTaskAC(taskId, domainModel, todolistId))
                 dispatch(setAppStatusAC("succeeded"))
+            } else {
+                dispatch(setAppErrorAC("Somme error"))
             }
+            dispatch(setAppStatusAC("failed"))
         }))
         .catch((err) => {
             dispatch(setAppErrorAC(err.message))
@@ -171,6 +174,6 @@ export type TasksActionsType =
     | RemoveTodolistActionType
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
-    | SetStatusType
-    | SetErrorType
+    | SetAppStatusType
+    | SetAppErrorType
 
