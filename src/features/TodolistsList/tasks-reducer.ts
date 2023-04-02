@@ -1,11 +1,10 @@
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from "../../api/todolists-api"
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from "./todolists-reducer"
 import {Dispatch} from "redux";
-import {AppRootStateType, AppThunk} from "../../app/store";
-import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
+import {AppRootStateType} from "../../app/store";
+import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
+
 
 
 const initialState: TasksStateType = {
@@ -83,6 +82,9 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<TasksAct
             dispatch(setTasksAC(todolistId, response.data.items))
             dispatch(setAppStatusAC("succeeded"))
         })
+        .catch((err) => {
+            handleServerNetworkError(err, dispatch)
+        })
 }
 
 export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<TasksActionsType>) => {
@@ -92,7 +94,12 @@ export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: 
             if (response.data.resultCode === 0) {
                 dispatch(removeTaskAC(todolistId, taskId))
                 dispatch(setAppStatusAC("succeeded"))
+            } else {
+                handleServerAppError(response.data, dispatch)
             }
+        })
+        .catch((err) => {
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -108,8 +115,7 @@ export const addTaskTC = (todolistID: string, title: string) => (dispatch: Dispa
             }
         })
         .catch((err) => {
-            dispatch(setAppErrorAC(err.message))
-            dispatch(setAppStatusAC("failed"))
+            handleServerNetworkError(err, dispatch)
         })
 }
 
