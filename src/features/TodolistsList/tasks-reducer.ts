@@ -5,6 +5,7 @@ import {AppRootStateType, AppThunk} from "../../app/store";
 import {setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType} from "../../app/app-reducer";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
+import {handleServerNetworkError} from "../../utils/error-utils";
 
 
 const initialState: TasksStateType = {
@@ -146,8 +147,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
             dispatch(setAppStatusAC("failed"))
         }))
         .catch((err) => {
-            dispatch(setAppErrorAC(err.message))
-            dispatch(setAppStatusAC("failed"))
+            handleServerNetworkError(err, dispatch)
         })
 }
 
