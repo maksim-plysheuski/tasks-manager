@@ -3,9 +3,9 @@ import {AppThunk} from "../../app/store";
 import {
     RequestStatusType,
     setAppErrorAC,
-    SetAppErrorType,
+    SetAppErrorActionType,
     setAppStatusAC,
-    SetAppStatusType
+    SetAppStatusActionType
 } from "../../app/app-reducer";
 
 
@@ -139,8 +139,8 @@ export type TodolistActionsType =
     | ReturnType<typeof changeTodolistFilterAC>
     | ReturnType<typeof changeEntityStatusAC>
     | SetTodolistsActionType
-    | SetAppStatusType
-    | SetAppErrorType
+    | SetAppStatusActionType
+    | SetAppErrorActionType
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistDomainType = TodolistType & {
