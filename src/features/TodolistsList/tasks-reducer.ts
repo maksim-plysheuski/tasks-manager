@@ -5,7 +5,7 @@ import {AppRootStateType, AppThunk} from "../../app/store";
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
-import {handleServerNetworkError} from "../../utils/error-utils";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 
 const initialState: TasksStateType = {
@@ -104,13 +104,8 @@ export const addTaskTC = (todolistID: string, title: string) => (dispatch: Dispa
                 dispatch(addTaskAC(todolistID, res.data.data.item))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC("Some error"))
-                }
+                handleServerAppError(res.data, dispatch)
             }
-            dispatch(setAppStatusAC("idle"))
         })
         .catch((err) => {
             dispatch(setAppErrorAC(err.message))
@@ -137,14 +132,13 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
     }
 
     todolistsAPI.updateTask(todolistId, taskId, apiModel)
-        .then((response => {
-            if (response.data.resultCode === 0) {
+        .then((res => {
+            if (res.data.resultCode === 0) {
                 dispatch(updateTaskAC(taskId, domainModel, todolistId))
                 dispatch(setAppStatusAC("succeeded"))
             } else {
-                dispatch(setAppErrorAC("Somme error"))
+                handleServerAppError(res.data, dispatch)
             }
-            dispatch(setAppStatusAC("failed"))
         }))
         .catch((err) => {
             handleServerNetworkError(err, dispatch)
