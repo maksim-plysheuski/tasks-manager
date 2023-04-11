@@ -36,7 +36,23 @@ export const todolistsAPI = {
     }
 }
 
+export const authAPI = {
+    login(loginData: LoginParamsType) {
+        //1 параметр то что возвращаем из функции, 2 что возвращает бэк, 3 парам то что мы отправляем на бэк
+        //посмотреть типизацию первого параметра (пока заглушка)
+        return instance.post<{data: string},AxiosResponse<ResponseType<{userId: number}>, LoginParamsType>>('auth/login', loginData)
+    }
+}
+
+
 //types
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: boolean
+}
+
 export type TodolistType = {
     id: string
     title: string

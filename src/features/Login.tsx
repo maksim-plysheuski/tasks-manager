@@ -8,6 +8,7 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useFormik} from "formik";
+import {authAPI} from "../api/todolists-api";
 
 type FormikErrorType = {
     email?: string
@@ -37,8 +38,11 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2))
+            /*alert(JSON.stringify(values, null, 2))*/
             formik.resetForm()
+            authAPI.login(values).then((res) => {
+                console.log(res)
+            })
         },
     })
     return <Grid container justifyContent={"center"}>
