@@ -11,7 +11,7 @@ import {useAppSelector} from "./store";
 import { RequestStatusType } from './app-reducer';
 import { LinearProgress } from '@mui/material';
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
-import {Login} from "../features/Login";
+import {Login} from "../login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 
 
