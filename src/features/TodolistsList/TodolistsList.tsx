@@ -13,6 +13,7 @@ import {
     removeTodolistTC, TodolistDomainType
 } from "./todolists-reducer";
 import {useAppDispatch, useAppSelector} from "../../app/store";
+import {Navigate} from "react-router-dom";
 
 
 export const TodolistsList: React.FC = () => {
@@ -22,6 +23,7 @@ export const TodolistsList: React.FC = () => {
 
     const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useAppSelector<TasksStateType>(state => state.tasks)
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch();
 
     const removeTask = useCallback(function (id: string, todolistId: string) {
@@ -56,6 +58,10 @@ export const TodolistsList: React.FC = () => {
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title));
     }, [dispatch]);
+
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'} />
+    }
 
     return <>
         <Grid container style={{padding: "20px"}}>
