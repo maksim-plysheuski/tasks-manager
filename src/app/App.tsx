@@ -5,18 +5,31 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { Menu } from '@mui/icons-material';
-import React, {useCallback} from "react"
+import React, {useCallback, useEffect} from "react"
 import { TodolistsList } from '../features/TodolistsList/TodolistsList';
-import {useAppSelector} from "./store";
-import { RequestStatusType } from './app-reducer';
-import { LinearProgress } from '@mui/material';
+import {useAppDispatch, useAppSelector} from "./store";
+import {initializeAppTC, RequestStatusType} from "./app-reducer";
+import {CircularProgress, LinearProgress } from '@mui/material';
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {Login} from "../features/login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 
 
 function App() {
+    const dispatch = useAppDispatch()
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
+    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
+
+    useEffect(() => {
+        dispatch(initializeAppTC())
+    }, [])
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
 
     return (
         <div className="App">

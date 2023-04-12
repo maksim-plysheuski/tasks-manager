@@ -17,14 +17,15 @@ import {Navigate} from "react-router-dom";
 
 
 export const TodolistsList: React.FC = () => {
-    useEffect(() => {
-        dispatch(fetchTodolistsTC())
-    }, [])
-
     const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useAppSelector<TasksStateType>(state => state.tasks)
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (!isLoggedIn) return
+            dispatch(fetchTodolistsTC())
+    }, [])
 
     const removeTask = useCallback(function (id: string, todolistId: string) {
         dispatch(removeTasksTC(todolistId, id))
