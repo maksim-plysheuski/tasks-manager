@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios'
-import {number, string} from "prop-types";
 
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.1/",
@@ -38,14 +37,18 @@ export const todolistsAPI = {
 }
 
 export const authAPI = {
+    authMe() {
+        return instance.get<ResponseType<UserDataType>>('auth/me')
+    },
     login(loginData: LoginParamsType) {
         //1 параметр то что возвращаем из функции, 2 что возвращает бэк, 3 парам то что мы отправляем на бэк
         //посмотреть типизацию первого параметра (пока заглушка)
         return instance.post<{data: string},AxiosResponse<ResponseType<{userId: number}>, LoginParamsType>>('auth/login', loginData)
     },
-    authMe() {
-        return instance.get<ResponseType<UserDataType>>('auth/me')
+    logout() {
+        return instance.delete<ResponseType>('auth/login')
     }
+
 }
 
 
