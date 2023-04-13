@@ -1,15 +1,15 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import { Menu } from '@mui/icons-material';
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import {Menu} from "@mui/icons-material";
 import React, {useCallback, useEffect} from "react"
-import { TodolistsList } from '../features/TodolistsList/TodolistsList';
+import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {useAppDispatch, useAppSelector} from "./store";
 import {initializeAppTC, RequestStatusType} from "./app-reducer";
-import {CircularProgress, LinearProgress } from '@mui/material';
+import {CircularProgress, LinearProgress} from "@mui/material";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {Login} from "../features/login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
@@ -30,12 +30,10 @@ function App() {
 
     if (!isInitialized) {
         return <div
-            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            style={{position: "fixed", top: "30%", textAlign: "center", width: "100%"}}>
             <CircularProgress/>
         </div>
     }
-
-
 
     return (
         <div className="App">
@@ -50,14 +48,14 @@ function App() {
                     {isLoggedIn && <Button onClick={logOutHandler} color="inherit">Log out</Button>}
                 </Toolbar>
             </AppBar>
-            {status === 'loading' && <LinearProgress color="primary" />}
+            {status === "loading" && <LinearProgress color="primary"/>}
             <ErrorSnackbar/>
             <Container fixed>
                 <Routes>
-                    <Route path="/" element={<TodolistsList/>}  />
-                    <Route path="/login" element={<Login/>}  />
-                    <Route path="/404" element={<h1 style={{textAlign: "center"}}>404: PAGE NOT FOUND</h1>}  />
-                    <Route path='*' element={ <Navigate to={"404"} /> } />
+                    <Route path="/" element={<TodolistsList/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/404" element={<h1 style={{textAlign: "center"}}>404: PAGE NOT FOUND</h1>}/>
+                    <Route path="*" element={<Navigate to={"404"}/>}/>
                 </Routes>
             </Container>
         </div>

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, from "react"
 import Grid from "@mui/material/Grid";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
@@ -21,9 +21,6 @@ type FormikErrorType = {
 export const Login = () => {
     const dispatch = useAppDispatch()
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-
-
-
 
 
     const formik = useFormik({
@@ -53,7 +50,7 @@ export const Login = () => {
     })
 
     if (isLoggedIn) {
-        return <Navigate to={'/'} />
+        return <Navigate to={"/"}/>
     }
     return <Grid container justifyContent={"center"}>
         <Grid item justifyContent={"center"}>
@@ -72,15 +69,18 @@ export const Login = () => {
                     <FormGroup>
                         <TextField label="Email"
                                    margin="normal"
-                                   {...formik.getFieldProps('email')} />
-                        {formik.errors.email && formik.touched.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
+                                   {...formik.getFieldProps("email")} />
+                        {formik.errors.email && formik.touched.email &&
+                            <div style={{color: "red"}}>{formik.errors.email}</div>}
                         <TextField type="password"
-                                     label="Password"
+                                   label="Password"
                                    margin="normal"
-                                   {...formik.getFieldProps('password')}/>
-                        {formik.errors.password && formik.touched.password && <div style={{color: 'red'}}>{formik.errors.password}</div>}
+                                   {...formik.getFieldProps("password")}/>
+                        {formik.errors.password && formik.touched.password &&
+                            <div style={{color: "red"}}>{formik.errors.password}</div>}
                         <FormControlLabel label={"Remember me"}
-                                          control={<Checkbox checked={formik.values.rememberMe } {...formik.getFieldProps('rememberMe')}/>}/>
+                                          control={<Checkbox
+                                              checked={formik.values.rememberMe} {...formik.getFieldProps("rememberMe")}/>}/>
                         <Button type={"submit"} variant={"contained"} color={"primary"}>
                             Login
                         </Button>
