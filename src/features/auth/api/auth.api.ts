@@ -1,4 +1,4 @@
-import { instance } from "../../../common";
+import { instance } from "../../../common/api";
 import { BaseResponseType } from "../../../common/types";
 
 export const authAPI = {

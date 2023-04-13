@@ -22,6 +22,8 @@ export type AppActionsType = TasksActionsType | TodolistActionsType
 export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
 export type AppThunk<ReturnType = void> = ThunkAction<void, AppRootStateType, unknown, AppActionsType>
 
+export type AppDispatch = typeof store.dispatch;
+
 
 //hooks
 export const useAppDispatch = () => useDispatch<AppThunkDispatch>()
