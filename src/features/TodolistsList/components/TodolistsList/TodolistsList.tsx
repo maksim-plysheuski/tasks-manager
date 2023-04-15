@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect} from "react";
 import Grid from "@mui/material/Grid";
-import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
+import {AddItemForm} from "../../../../common/components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
 import {addTaskTC, removeTasksTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
-import {TaskStatuses} from "../../api/todolists-api";
+import {TaskStatuses} from "../../../../api/todolists-api";
 import {
     addTodolistTC,
     changeTodolistFilterAC,
@@ -12,7 +12,7 @@ import {
     FilterValuesType, fetchTodolistsTC,
     removeTodolistTC, TodolistDomainType
 } from "./todolists-reducer";
-import {useAppDispatch, useAppSelector} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../../app/store";
 import {Navigate} from "react-router-dom";
 
 

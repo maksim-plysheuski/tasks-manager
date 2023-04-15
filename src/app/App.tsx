@@ -6,14 +6,14 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import {Menu} from "@mui/icons-material";
 import React, {useCallback, useEffect} from "react"
-import {TodolistsList} from "../features/TodolistsList/TodolistsList";
+import {TodolistsList} from "../features/TodolistsList/components/TodolistsList/TodolistsList";
 import {useAppDispatch, useAppSelector} from "./store";
 import {initializeAppTC, RequestStatusType} from "./app-reducer";
 import {CircularProgress, LinearProgress} from "@mui/material";
-import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
-import {Login} from "../features/login/Login";
+import {ErrorSnackbar} from "../common/components/ErrorSnackbar/ErrorSnackbar";
+import {Login} from "../features/auth/components/login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {logoutTC} from "../features/login/auth-reudcer";
+import {logoutTC} from "../features/auth/components/login/auth-reudcer";
 
 
 function App() {

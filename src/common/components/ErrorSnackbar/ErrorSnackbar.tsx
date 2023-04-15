@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import {useAppDispatch, useAppSelector} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {setAppErrorAC} from "../../app/app-reducer";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
