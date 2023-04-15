@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { handleServerAppError, handleServerNetworkError } from "../../../utils/error-utils";
-import { createAppAsyncThunk } from "../../../common/utils/createAppAsyncThunk";
+import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "../../../common/utils";
+import { thunkTryCatch } from "../../../common/utils";
+import { appActions } from "../../../app/appSlice";
+import { ResultCode } from "../../../common/enums/common.enums";
+import { authAPI, LoginParamsType } from "../api/auth.api";
+import { clearTasksAndTodolists } from "../../../common/actions";
 
 
 const slice = createSlice({
-  name: "auth",
+  name: "authSlice",
   initialState: {
     isLoggedIn: false
   },
