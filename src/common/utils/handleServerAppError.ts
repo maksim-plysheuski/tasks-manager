@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { BaseResponseType } from "../types";
-import { appActions } from "../../app/appSlice";
+import { appActions } from "../../app/app-slice";
 
 export const handleServerAppError = <D>(
   data: BaseResponseType<D>,

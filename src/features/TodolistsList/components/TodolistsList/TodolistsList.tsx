@@ -12,7 +12,6 @@ import {
     FilterValuesType, fetchTodolistsTC,
     removeTodolistTC, TodolistDomainType
 } from "./todolists-reducer";
-import {useAppDispatch, useAppSelector} from "../../../../app/store";
 import {Navigate} from "react-router-dom";
 
 

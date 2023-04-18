@@ -1,6 +1,7 @@
-import { instance } from "../../../common/api";
-import { BaseResponseType } from "../../../common/types";
-import { TaskPriorities, TaskStatuses } from "../../../common/enums/common.enums";
+import { instance } from "../../common/api";
+import { BaseResponseType } from "../../common/types";
+import { TaskPriorities, TaskStatuses } from "../../common/enums/common.enums";
+import { UpdateDomainTaskModelType } from "./tasks-slice";
 
 
 export const todolistsApi = {
@@ -77,7 +78,7 @@ export type AddTaskArgType = {
 
 export type UpdateTaskArgType = {
   taskId: string;
-  domainModel: any;
+  domainModel: UpdateDomainTaskModelType;
   todolistId: string;
 };
 
