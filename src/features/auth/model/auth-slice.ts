@@ -3,7 +3,7 @@ import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } f
 import { thunkTryCatch } from "../../../common/utils";
 import { appActions } from "../../../app/app-slice";
 import { ResultCode } from "../../../common/enums/common.enums";
-import { authAPI, LoginParamsType } from "../api/auth.api";
+import { authApi, LoginParamsType } from "../api/auth-api";
 import { clearTasksAndTodolists } from "../../../common/actions";
 
 
@@ -30,7 +30,7 @@ const slice = createSlice({
 const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>("auth/login", async (arg, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
   return thunkTryCatch(thunkAPI, async () => {
-    const res = await authAPI.login(arg);
+    const res = await authApi.login(arg);
     if (res.data.resultCode === ResultCode.Success) {
       return { isLoggedIn: true };
     } else {
@@ -44,7 +44,7 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>("aut
 const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("auth/logout", async (_, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
   return thunkTryCatch(thunkAPI, async () => {
-    const res = await authAPI.logout();
+    const res = await authApi.logout();
     if (res.data.resultCode === ResultCode.Success) {
       dispatch(clearTasksAndTodolists());
       return { isLoggedIn: false };
@@ -58,7 +58,7 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("auth/logout",
 const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("app/initializeApp", async (_, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
   try {
-    const res = await authAPI.me();
+    const res = await authApi.me();
     if (res.data.resultCode === ResultCode.Success) {
       return { isLoggedIn: true };
     } else {

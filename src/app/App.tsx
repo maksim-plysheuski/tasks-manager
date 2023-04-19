@@ -4,62 +4,68 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import {Menu} from "@mui/icons-material";
-import React, {useCallback, useEffect} from "react"
-import {TodolistsList} from "../features/TodolistsList/components/TodolistsList/TodolistsList";
-import {useAppDispatch, useAppSelector} from "./store";
-import {initializeAppTC, RequestStatusType} from "./app-reducer";
-import {CircularProgress, LinearProgress} from "@mui/material";
-import {ErrorSnackbar} from "../common/components/ErrorSnackbar/ErrorSnackbar";
-import {Login} from "../features/auth/components/login/Login";
-import {Navigate, Route, Routes} from "react-router-dom";
-import {logoutTC} from "../features/auth/components/login/auth-reudcer";
+import { Menu } from "@mui/icons-material";
+import React, { useCallback, useEffect } from "react";
+import { TodolistsList } from "../features/TodolistsList/components/TodolistsList/TodolistsList";
+import { CircularProgress, LinearProgress } from "@mui/material";
+import { ErrorSnackbar } from "../common/components/ErrorSnackbar/ErrorSnackbar";
+import { Login } from "../features/auth/components/login/Login";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { selectAppStatus, selectIsInitialized } from "./app-selectors";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../features/auth/selectors/auth-selectors";
+import { useActions } from "../common/hooks/useActions";
+import { authThunks } from "../features/auth/model/auth-slice";
 
 
 function App() {
-    const dispatch = useAppDispatch()
-    const status = useAppSelector<RequestStatusType>(state => state.app.status)
-    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
-    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const status = useSelector(selectAppStatus);
+  const isInitialized = useSelector(selectIsInitialized);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-    const logOutHandler = () => dispatch(logoutTC())
+  const { initializeApp, logout } = useActions(authThunks);
 
-    useEffect(() => {
-        dispatch(initializeAppTC())
-    }, [])
+  const logoutHandler = () => logout();
 
-    if (!isInitialized) {
-        return <div
-            style={{position: "fixed", top: "30%", textAlign: "center", width: "100%"}}>
-            <CircularProgress/>
-        </div>
-    }
+  useEffect(() => {
+    initializeApp();
+  }, []);
 
+  if (!isInitialized) {
     return (
+      <div style={{ position: "fixed", top: "30%", textAlign: "center", width: "100%" }}>
+        <CircularProgress />
+      </div>
+    );
+  }
+
+  return (
+    <BrowserRouter>
         <div className="App">
+            <ErrorSnackbar />
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
-                        <Menu/>
+                        <Menu />
                     </IconButton>
-                    <Typography variant="h6">
-                        News
-                    </Typography>
-                    {isLoggedIn && <Button onClick={logOutHandler} color="inherit">Log out</Button>}
+                    <Typography variant="h6">News</Typography>
+                    {isLoggedIn && (
+                      <Button color="inherit" onClick={logoutHandler}>
+                          Log out
+                      </Button>
+                    )}
                 </Toolbar>
+                {status === "loading" && <LinearProgress />}
             </AppBar>
-            {status === "loading" && <LinearProgress color="primary"/>}
-            <ErrorSnackbar/>
             <Container fixed>
                 <Routes>
-                    <Route path="/" element={<TodolistsList/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/404" element={<h1 style={{textAlign: "center"}}>404: PAGE NOT FOUND</h1>}/>
-                    <Route path="*" element={<Navigate to={"404"}/>}/>
+                    <Route path={"/"} element={<TodolistsList />} />
+                    <Route path={"/login"} element={<Login />} />
                 </Routes>
             </Container>
         </div>
-    );
+    </BrowserRouter>
+  );
 }
 
 export default App;
