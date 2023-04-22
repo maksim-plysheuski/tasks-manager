@@ -1,33 +1,33 @@
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import {useAppDispatch, useAppSelector} from "../../../app/store";
-import {setAppErrorAC} from "../../app/app-reducer";
+import { useSelector } from "react-redux";
+import { selectAppError } from "../../../app/app-selectors";
+import { appActions } from "../../../app/app-slice";
+import { useActions } from "../../hooks";
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref,
-) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export const ErrorSnackbar = () => {
-    const error = useAppSelector<string | null>(state => state.app.error)
-    const dispatch = useAppDispatch()
+export function ErrorSnackbar() {
+  const error = useSelector(selectAppError);
+  const { setAppError } = useActions(appActions);
 
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAppError({ error: null });
+  };
 
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
+  const isOpen = error !== null;
 
-        dispatch(setAppErrorAC(null))
-    };
-    return (
-            <Snackbar open={error !== null} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                    {error}
-                </Alert>
-            </Snackbar>
-    );
+  return (
+    <Snackbar open={isOpen} autoHideDuration={6000} onClose={handleClose}>
+      <Alert onClose={handleClose} severity="error">
+        {error}
+      </Alert>
+    </Snackbar>
+  );
 }

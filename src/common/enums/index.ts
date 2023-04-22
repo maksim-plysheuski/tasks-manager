@@ -1,1 +1,1 @@
-export {  } from "./common.enums";
+export * from "./common.enums";

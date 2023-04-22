@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "../../../common/utils";
 import { thunkTryCatch } from "../../../common/utils";
 import { appActions } from "../../../app/app-slice";
-import { ResultCode } from "../../../common/enums/common.enums";
+import { ResultCode } from "../../../common/enums";
 import { authApi, LoginParamsType } from "../api/auth-api";
 import { clearTasksAndTodolists } from "../../../common/actions";
 
