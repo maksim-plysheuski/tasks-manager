@@ -6,16 +6,16 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { Menu } from "@mui/icons-material";
 import React, { useCallback, useEffect } from "react";
-import { TodolistsList } from "../features/TodolistsList/components/TodolistsList/TodolistsList";
+import { TodolistsList } from "features/TodolistsList/ui/TodolistsList";
 import { CircularProgress, LinearProgress } from "@mui/material";
-import { ErrorSnackbar } from "../common/components/ErrorSnackbar/ErrorSnackbar";
-import { Login } from "../features/auth/components/login/Login";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { selectAppStatus, selectIsInitialized } from "./app-selectors";
 import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../features/auth/selectors/auth-selectors";
-import { useActions } from "../common/hooks/useActions";
-import { authThunks } from "../features/auth/model/auth-slice";
+import { authThunks } from "features/auth/model/auth-slice";
+import { ErrorSnackbar } from "common/components";
+import { selectIsLoggedIn } from "features/auth/selectors/auth-selectors";
+import { useActions } from "common/hooks/useActions";
+import { Login } from "features/auth/components/login/Login";
 
 
 function App() {
@@ -41,29 +41,29 @@ function App() {
 
   return (
     <BrowserRouter>
-        <div className="App">
-            <ErrorSnackbar />
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
-                        <Menu />
-                    </IconButton>
-                    <Typography variant="h6">News</Typography>
-                    {isLoggedIn && (
-                      <Button color="inherit" onClick={logoutHandler}>
-                          Log out
-                      </Button>
-                    )}
-                </Toolbar>
-                {status === "loading" && <LinearProgress />}
-            </AppBar>
-            <Container fixed>
-                <Routes>
-                    <Route path={"/"} element={<TodolistsList />} />
-                    <Route path={"/login"} element={<Login />} />
-                </Routes>
-            </Container>
-        </div>
+      <div className="App">
+        <ErrorSnackbar />
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton edge="start" color="inherit" aria-label="menu">
+              <Menu />
+            </IconButton>
+            <Typography variant="h6">Task Manager</Typography>
+            {isLoggedIn && (
+              <Button color="inherit" onClick={logoutHandler}>
+                Log out
+              </Button>
+            )}
+          </Toolbar>
+          {status === "loading" && <LinearProgress />}
+        </AppBar>
+        <Container fixed>
+          <Routes>
+            <Route path={"/"} element={<TodolistsList />} />
+            <Route path={"/login"} element={<Login />} />
+          </Routes>
+        </Container>
+      </div>
     </BrowserRouter>
   );
 }

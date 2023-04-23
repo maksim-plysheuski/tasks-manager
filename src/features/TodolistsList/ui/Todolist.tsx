@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect } from "react";
-import { AddItemForm } from "../../../../../common/components/AddItemForm/AddItemForm";
-import { EditableSpan } from "../../../../../common/components/EditableSpan/EditableSpan";
+import { AddItemForm } from "common/components";
+import { EditableSpan } from "common/components";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { Delete } from "@mui/icons-material";
-import { Task } from "./Task/Task";
-import { tasksThunks } from "../../../tasks-slice";
-import { useActions } from "../../../../../common/hooks/useActions";
-import { FilterValuesType, TodolistDomainType } from "../../../todolists-slice";
-import { TaskType } from "../../../todolists-api";
-import { TaskStatuses } from "../../../../../common/enums/common.enums";
+import { Task } from "features/TodolistsList/ui/Task/Task";
+import { tasksThunks } from "features/TodolistsList/model/tasks-slice";
+import { useActions } from "common/hooks";
+import { FilterValuesType, TodolistDomainType } from "features/TodolistsList/model/todolists-slice";
+import { TaskType } from "features/TodolistsList/api/todolists-api";
+import { TaskStatuses } from "common/enums";
 
 
 type PropsType = {
@@ -17,15 +17,12 @@ type PropsType = {
   tasks: TaskType[];
   changeFilter: (value: FilterValuesType, todolistId: string) => void;
   addTask: (title: string, todolistId: string) => void;
-  changeTaskStatus: (id: string, status: TaskStatuses, todolistId: string) => void;
-  changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void;
-  removeTask: (taskId: string, todolistId: string) => void;
   removeTodolist: (id: string) => void;
   changeTodolistTitle: (id: string, newTitle: string) => void;
 };
 
 export const Todolist = React.memo(function(props: PropsType) {
-  const { fetchTasks } = useActions(tasksThunks);
+  const { fetchTasks,  } = useActions(tasksThunks);
 
   useEffect(() => {
     fetchTasks(props.todolist.id);
@@ -86,9 +83,6 @@ export const Todolist = React.memo(function(props: PropsType) {
             key={t.id}
             task={t}
             todolistId={props.todolist.id}
-            removeTask={props.removeTask}
-            changeTaskTitle={props.changeTaskTitle}
-            changeTaskStatus={props.changeTaskStatus}
           />
         ))}
       </div>

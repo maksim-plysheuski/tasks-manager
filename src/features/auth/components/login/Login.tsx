@@ -1,58 +1,12 @@
 import React from "react";
-import { FormikHelpers, useFormik } from "formik";
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material";
-import s from "features/auth/ui/login/login.module.css";
-import { selectIsLoggedIn } from "../../selectors/auth-selectors";
-import { useActions } from "../../../../common/hooks";
-import { BaseResponseType } from "../../../../common/types";
-import { LoginParamsType } from "../../api/auth-api";
-import { authThunks } from "../../model/auth-slice";
+import s from "./Login.module.css";
+import { useLogin } from "features/auth/hooks/useLogin";
 
-type FormikErrorType = {
-  email?: string;
-  password?: string;
-  rememberMe?: boolean;
-};
 
 export const Login = () => {
-  const { login } = useActions(authThunks);
-
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-
-  const formik = useFormik({
-    validate: (values) => {
-      const errors: FormikErrorType = {};
-      if (!values.email) {
-        errors.email = "Email is required";
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = "Invalid email address";
-      }
-
-      if (!values.password) {
-        errors.password = "Required";
-      } else if (values.password.length < 3) {
-        errors.password = "Must be 3 characters or more";
-      }
-
-      return errors;
-    },
-    initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false
-    },
-    onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
-      login(values)
-        .unwrap()
-        .catch((reason: BaseResponseType) => {
-          reason.fieldsErrors?.forEach((fieldError) => {
-            formikHelpers.setFieldError(fieldError.field, fieldError.error);
-          });
-        });
-    }
-  });
+  const { formik, isLoggedIn } = useLogin();
 
   if (isLoggedIn) {
     return <Navigate to={"/"} />;

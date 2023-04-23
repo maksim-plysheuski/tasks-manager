@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { todolistsThunks } from "./todolists-slice";
-import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from "../../common/utils";
+import { todolistsThunks } from "features/TodolistsList/model/todolists-slice";
+import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from "common/utils";
 import {
   AddTaskArgType,
   RemoveTaskArgType,
@@ -8,10 +8,10 @@ import {
   todolistsApi,
   UpdateTaskArgType,
   UpdateTaskModelType
-} from "./todolists-api";
-import { clearTasksAndTodolists } from "../../common/actions";
-import { appActions } from "../../app/app-slice";
-import { ResultCode, TaskPriorities, TaskStatuses } from "../../common/enums/common.enums";
+} from "features/TodolistsList/api/todolists-api";
+import { clearTasksAndTodolists } from "common/actions";
+import { appActions } from "app/app-slice";
+import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums/common.enums";
 
 const initialState: TasksStateType = {};
 export type UpdateDomainTaskModelType = {
