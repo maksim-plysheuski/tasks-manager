@@ -3,13 +3,12 @@ import { AddItemForm } from "common/components";
 import { EditableSpan } from "common/components";
 import IconButton from "@mui/material/IconButton";
 import { Delete } from "@mui/icons-material";
-import { Task } from "features/TodolistsList/ui/Todolist/Task/Task";
 import { tasksThunks } from "features/TodolistsList/model/tasks-slice";
 import { useActions } from "common/hooks";
 import { TodolistDomainType, todolistsThunks } from "features/TodolistsList/model/todolists-slice";
 import { TaskType } from "features/TodolistsList/api/todolists-api";
-import { TaskStatuses } from "common/enums";
 import { FilterTasksButtons } from "features/TodolistsList/ui/Todolist/FilterTasksButtons/FilterTasksButtons";
+import { Tasks } from "features/TodolistsList/ui/Todolist/Tasks/Tasks";
 
 
 type Props = {
@@ -17,9 +16,9 @@ type Props = {
   tasks: TaskType[];
 };
 
+
 export const Todolist: FC<Props> = React.memo(function({ todolist, tasks }) {
   const { removeTodolist, changeTodolistTitle } = useActions(todolistsThunks);
-
   const { fetchTasks, addTask } = useActions(tasksThunks);
 
 
@@ -39,15 +38,6 @@ export const Todolist: FC<Props> = React.memo(function({ todolist, tasks }) {
   );
 
 
-  let tasksForTodolist = tasks;
-
-  if (todolist.filter === "active") {
-    tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.New);
-  }
-  if (todolist.filter === "completed") {
-    tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.Completed);
-  }
-
   return (
     <div>
       <h3>
@@ -57,15 +47,7 @@ export const Todolist: FC<Props> = React.memo(function({ todolist, tasks }) {
         </IconButton>
       </h3>
       <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === "loading"} />
-      <div>
-        {tasksForTodolist.map((t) => (
-          <Task
-            key={t.id}
-            task={t}
-            todolistId={todolist.id}
-          />
-        ))}
-      </div>
+      <Tasks tasks={tasks} todolist={todolist} />
       <div style={{ paddingTop: "10px" }}>
         <FilterTasksButtons todolist={todolist} />
       </div>
