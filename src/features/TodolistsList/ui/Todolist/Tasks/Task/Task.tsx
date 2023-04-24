@@ -6,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { TaskType } from "features/TodolistsList/api/todolists-api";
 import { TaskStatuses } from "common/enums/common.enums";
 import { useActions } from "common/hooks";
-import { tasksThunks } from "features/TodolistsList/model/tasks-slice";
+import { tasksThunks } from "features/TodolistsList/model/tasks/tasks-slice";
 import s from "./Task.module.css";
 
 

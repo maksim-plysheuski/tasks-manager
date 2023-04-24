@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { Grid, Paper } from "@mui/material";
 import { Todolist } from "features/TodolistsList/ui/Todolist/Todolist";
 import { Navigate } from "react-router-dom";
-import { todolistsThunks } from "features/TodolistsList/model/todolists-slice";
+import { todolistsThunks } from "features/TodolistsList/model/todolists/todolists-slice";
 import { selectIsLoggedIn } from "features/auth/selectors/auth-selectors";
-import { selectTasks } from "features/TodolistsList/model/tasks-selectors";
+import { selectTasks } from "features/TodolistsList/model/tasks/tasks-selectors";
 import { useActions } from "common/hooks/useActions";
 import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
-import { selectTodolists } from "features/TodolistsList/model/todolists-selectors";
+import { selectTodolists } from "features/TodolistsList/model/todolists/todolists-selectors";
 
 
 export const TodolistsList = () => {

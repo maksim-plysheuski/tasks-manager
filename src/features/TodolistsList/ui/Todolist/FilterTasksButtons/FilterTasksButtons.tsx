@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import React, { FC } from "react";
 import { useActions } from "common/hooks";
-import { FilterValuesType, TodolistDomainType, todolistsActions } from "features/TodolistsList/model/todolists-slice";
+import { FilterValuesType, TodolistDomainType, todolistsActions } from "features/TodolistsList/model/todolists/todolists-slice";
 
 type Props = {
   todolist: TodolistDomainType
@@ -15,7 +15,7 @@ export const FilterTasksButtons: FC<Props> = ({ todolist }) => {
   };
 
   return (
-    <>
+    <div style={{ paddingTop: "10px" }}>
       <Button
         variant={todolist.filter === "all" ? "outlined" : "text"}
         onClick={() => changeFilterHandler("all")}
@@ -37,6 +37,6 @@ export const FilterTasksButtons: FC<Props> = ({ todolist }) => {
       >
         Completed
       </Button>
-    </>
+    </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { TaskStatuses } from "common/enums";
-import { TodolistDomainType } from "features/TodolistsList/model/todolists-slice";
+import { TodolistDomainType } from "features/TodolistsList/model/todolists/todolists-slice";
 import { TaskType } from "features/TodolistsList/api/todolists-api";
 import { Task } from "features/TodolistsList/ui/Todolist/Tasks/Task/Task";
 
