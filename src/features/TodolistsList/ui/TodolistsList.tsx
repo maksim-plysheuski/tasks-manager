@@ -17,7 +17,9 @@ export const TodolistsList = () => {
   const tasks = useSelector(selectTasks);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const addTodolistCallback = useCallback((title: string) => addTodolist(title), []);
+  const addTodolistCallback = useCallback((title: string) => {
+    return addTodolist(title).unwrap()
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {

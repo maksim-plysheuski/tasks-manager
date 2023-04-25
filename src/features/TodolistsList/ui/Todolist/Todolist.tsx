@@ -22,7 +22,9 @@ export const Todolist: FC<Props> = React.memo(function({ todolist, tasks }) {
     fetchTasks(todolist.id);
   }, []);
 
-  const addTaskCallback = useCallback((title: string) => addTask({ title, todolistId: todolist.id }), [todolist.id]);
+  const addTaskCallback = useCallback((title: string) => {
+    return addTask({ title, todolistId: todolist.id }).unwrap()
+  }, [todolist.id]);
 
 
   return (

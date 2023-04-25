@@ -21,7 +21,7 @@ export const Tasks: FC<Props> = ({ tasks, todolist }) => {
 
   return (
     <div>
-      {tasksForTodolist.map((t) => <Task task={t} todolistId={todolist.id} />)}
+      {tasksForTodolist.map((t) => <Task key={t.id} task={t} todolistId={todolist.id} />)}
     </div>
   );
 };
