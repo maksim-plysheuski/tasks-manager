@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "../../../common/utils";
-import { thunkTryCatch } from "../../../common/utils";
-import { appActions } from "../../../app/app-slice";
-import { ResultCode } from "../../../common/enums";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "common/utils";
+import { thunkTryCatch } from "common/utils";
+import { appActions } from "app/app-slice";
+import { ResultCode } from "common/enums";
 import { authApi, LoginParamsType } from "../api/auth-api";
-import { clearTasksAndTodolists } from "../../../common/actions";
+import { clearTasksAndTodolists } from "common/actions";
 
 
 const slice = createSlice({
@@ -15,15 +15,11 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(login.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.isLoggedIn;
-      })
-      .addCase(logout.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.isLoggedIn;
-      })
-      .addCase(initializeApp.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.isLoggedIn;
-      });
+      .addMatcher(
+        isAnyOf(authThunks.login.fulfilled, authThunks.logout.fulfilled, authThunks.initializeApp.fulfilled),
+        (state, action) => {
+          state.isLoggedIn = action.payload.isLoggedIn;
+        });
   }
 });
 

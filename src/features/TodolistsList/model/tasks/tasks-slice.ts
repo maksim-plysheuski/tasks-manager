@@ -65,7 +65,7 @@ const slice = createSlice({
       })
       .addCase(clearTasksAndTodolists, () => {
         return {};
-      });
+      })
   },
 });
 
