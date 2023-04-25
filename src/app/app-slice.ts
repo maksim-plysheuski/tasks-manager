@@ -1,4 +1,5 @@
-import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
+import { AnyAction, createSlice, isAnyOf, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
+import { authThunks } from "features/auth/model/auth-slice";
 
 const initialState = {
   status: "idle" as RequestStatusType,
@@ -23,17 +24,24 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addMatcher(isPending, (state) => {
-          state.status = "loading";
-        }
-      )
+        state.status = "loading";
+      })
       .addMatcher(isFulfilled, (state) => {
-          state.status = "succeeded";
+        state.status = "succeeded";
+      })
+      .addMatcher(isRejected, (state, action: AnyAction) => {
+        state.status = "failed";
+        if (action.payload) {
+          if (action.type === "todo/addTodolist/rejected") return;
+          state.error = action.payload.messages[0];
+        } else {
+          state.error = action.error.message ? action.error.message : "Some error occurred";
         }
-      )
-      .addMatcher(isRejected, (state) => {
-          state.status = "failed";
-        }
-      );
+      })
+      .addMatcher(isAnyOf(authThunks.initializeApp.fulfilled, authThunks.initializeApp.rejected),
+        (state) => {
+        state.isInitialized = true
+      })
   }
 });
 

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { todolistsThunks } from "features/TodolistsList/model/todolists/todolists-slice";
-import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from "common/utils";
+import { createAppAsyncThunk } from "common/utils";
 import {
   AddTaskArgType,
   RemoveTaskArgType,
@@ -14,6 +14,7 @@ import { appActions } from "app/app-slice";
 import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums/common.enums";
 
 const initialState: TasksStateType = {};
+
 export type UpdateDomainTaskModelType = {
   title?: string;
   description?: string;
@@ -71,34 +72,28 @@ const slice = createSlice({
 
 const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: string }, string>(
   "tasks/fetchTasks",
-  async (todolistId, thunkAPI) => {
-    return thunkTryCatch(thunkAPI, async () => {
+  async (todolistId) => {
       const res = await todolistsApi.getTasks(todolistId);
       const tasks = res.data.items;
       return { tasks, todolistId };
-    });
   },
 );
 
 const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgType>("tasks/addTask", async (arg, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
-  return thunkTryCatch(thunkAPI, async () => {
     const res = await todolistsApi.createTask(arg);
     if (res.data.resultCode === ResultCode.Success) {
       const task = res.data.data.item;
       return { task };
     } else {
-      handleServerAppError(res.data, dispatch, false);
       return rejectWithValue(res.data);
     }
-  });
 });
 
 const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
   "tasks/updateTask",
   async (arg, thunkAPI) => {
     const { dispatch, rejectWithValue, getState } = thunkAPI;
-    return thunkTryCatch(thunkAPI, async () => {
       const state = getState();
       const task = state.tasks[arg.todolistId].find((t) => t.id === arg.taskId);
       if (!task) {
@@ -120,26 +115,21 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
       if (res.data.resultCode === ResultCode.Success) {
         return arg;
       } else {
-        handleServerAppError(res.data, dispatch);
         return rejectWithValue(null);
       }
-    });
   },
 );
 
 const removeTask = createAppAsyncThunk<RemoveTaskArgType, RemoveTaskArgType>(
   "tasks/removeTask",
   async (arg, thunkAPI) => {
-    const { dispatch, rejectWithValue } = thunkAPI;
-    return thunkTryCatch(thunkAPI, async () => {
+    const { rejectWithValue } = thunkAPI;
       const res = await todolistsApi.deleteTask(arg);
       if (res.data.resultCode === ResultCode.Success) {
         return arg;
       } else {
-        handleServerAppError(res.data, dispatch);
         return rejectWithValue(null);
       }
-    });
   },
 );
 
