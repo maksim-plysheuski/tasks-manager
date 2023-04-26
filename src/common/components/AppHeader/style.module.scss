@@ -1,0 +1,53 @@
+@import "src/common/style/variables";
+
+.header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  background-color: #171717;
+  border-bottom: 1px solid #333333;
+  z-index: 99;
+  justify-content: center;
+
+  .headerContainer {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .logoContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    span {
+      color: $primaryFontColor;
+      margin-right: 15px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    button {
+      height: 28px;
+      width: 90px;
+      background-color: $dark100;
+      border: none;
+      transition: opacity 250ms ease-in-out;
+
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+    }
+
+    h3 {
+      color: $primaryStyleColor;
+      margin-left: 10px;
+      font-family: Cambria, sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+    }
+  }
+}

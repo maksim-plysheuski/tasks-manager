@@ -3,13 +3,13 @@ import { BaseResponseType } from "common/types";
 
 export const authApi = {
   login(data: LoginParamsType) {
-    return instance.post<BaseResponseType<{ userId?: number }>>("auth/login", data);
+    return instance.post<BaseResponseType<LoginLogoutType>>("auth/login", data);
   },
   logout() {
-    return instance.delete<BaseResponseType<{ userId?: number }>>("auth/login");
+    return instance.delete<BaseResponseType<LoginLogoutType>>("auth/login");
   },
   me() {
-    return instance.get<BaseResponseType<{ id: number; email: string; login: string }>>("auth/me");
+    return instance.get<BaseResponseType<ProfileType>>("auth/me");
   }
 };
 
@@ -19,3 +19,13 @@ export type LoginParamsType = {
   rememberMe: boolean;
   captcha?: string;
 };
+
+export type ProfileType = {
+  id: number;
+  email: string;
+  login: string
+}
+
+type LoginLogoutType = {
+  userId?: number
+}
