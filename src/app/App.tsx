@@ -17,20 +17,18 @@ import { selectIsLoggedIn } from "features/auth/model/auth-selectors";
 import { useActions } from "common/hooks/useActions";
 import { Login } from "features/auth/ui/login/Login";
 import { AppHeader } from "common/components/AppHeader/AppHeader";
+import { Routing } from "common/components/Routing/Routing";
 
 
 function App() {
-
   const isInitialized = useSelector(selectIsInitialized);
-
-
   const { initializeApp } = useActions(authThunks);
-
 
 
   useEffect(() => {
     initializeApp();
   }, []);
+
 
   if (!isInitialized) {
     return (
@@ -43,14 +41,9 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <ErrorSnackbar />
         <AppHeader/>
-        <Container fixed>
-          <Routes>
-            <Route path={"/"} element={<TodolistsList />} />
-            <Route path={"/login"} element={<Login />} />
-          </Routes>
-        </Container>
+        <Routing />
+        <ErrorSnackbar />
       </div>
     </BrowserRouter>
   );
