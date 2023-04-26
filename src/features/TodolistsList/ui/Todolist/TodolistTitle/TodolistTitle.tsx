@@ -18,9 +18,7 @@ export const TodolistTitle: FC<Props> = ({ todolist }) => {
   const changeTodolistTitleHandler = useCallback(
     (title: string) => {
       changeTodolistTitle({ title, id });
-    },
-    [id]
-  );
+    }, [id]);
 
   return (
     <h3>

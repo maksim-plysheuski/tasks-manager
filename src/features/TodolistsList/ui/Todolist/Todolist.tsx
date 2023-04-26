@@ -30,7 +30,7 @@ export const Todolist: FC<Props> = React.memo(function({ todolist, tasks }) {
   return (
     <div>
       <TodolistTitle todolist={todolist} />
-      <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === "loading"} />
+      <AddItemForm addItemCallback={addTaskCallback} disabled={todolist.entityStatus === "loading"} />
       <Tasks tasks={tasks} todolist={todolist} />
       <FilterTasksButtons todolist={todolist} />
     </div>

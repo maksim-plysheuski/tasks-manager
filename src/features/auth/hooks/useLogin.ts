@@ -22,9 +22,9 @@ export const useLogin = () => {
       }
 
       if (!values.password) {
-        errors.password = "Required";
+        errors.password = "Field is required";
       } else if (values.password.length < 3) {
-        errors.password = "Must be 3 characters or more";
+        errors.password = "Password must be 3 characters or more";
       }
 
       return errors;

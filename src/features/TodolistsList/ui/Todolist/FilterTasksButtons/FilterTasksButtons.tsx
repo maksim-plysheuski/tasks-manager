@@ -10,9 +10,7 @@ type Props = {
 export const FilterTasksButtons: FC<Props> = ({ todolist }) => {
   const { changeTodolistFilter } = useActions(todolistsActions);
 
-  const changeFilterHandler = (filter: FilterValuesType) => {
-    changeTodolistFilter({ filter, id: todolist.id });
-  };
+  const changeFilterHandler = (filter: FilterValuesType) => changeTodolistFilter({ filter, id: todolist.id });
 
   return (
     <div style={{ paddingTop: "10px" }}>

@@ -16,16 +16,17 @@ import { ErrorSnackbar } from "common/components";
 import { selectIsLoggedIn } from "features/auth/model/auth-selectors";
 import { useActions } from "common/hooks/useActions";
 import { Login } from "features/auth/ui/login/Login";
+import { AppHeader } from "common/components/AppHeader/AppHeader";
 
 
 function App() {
-  const status = useSelector(selectAppStatus);
+
   const isInitialized = useSelector(selectIsInitialized);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const { initializeApp, logout } = useActions(authThunks);
 
-  const logoutHandler = () => logout();
+  const { initializeApp } = useActions(authThunks);
+
+
 
   useEffect(() => {
     initializeApp();
@@ -43,20 +44,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <ErrorSnackbar />
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <Menu />
-            </IconButton>
-            <Typography variant="h6">Task Manager</Typography>
-            {isLoggedIn && (
-              <Button color="inherit" onClick={logoutHandler}>
-                Log out
-              </Button>
-            )}
-          </Toolbar>
-          {status === "loading" && <LinearProgress />}
-        </AppBar>
+        <AppHeader/>
         <Container fixed>
           <Routes>
             <Route path={"/"} element={<TodolistsList />} />

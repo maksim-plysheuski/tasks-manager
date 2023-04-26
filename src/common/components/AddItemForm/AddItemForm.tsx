@@ -1,21 +1,21 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+import React, { ChangeEvent, FC, KeyboardEvent, useState } from "react";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import { AddBox } from "@mui/icons-material";
 import { BaseResponseType } from "common/types";
 
 type Props = {
-  addItem: (title: string) => Promise<any>
+  addItemCallback: (title: string) => Promise<any>
   disabled?: boolean
 }
 
-export const AddItemForm = React.memo(function({ addItem, disabled = false }: Props) {
+export const AddItemForm: FC<Props> = React.memo(({ addItemCallback, disabled = false }) => {
   let [title, setTitle] = useState("");
   let [error, setError] = useState<string | null>(null);
 
   const addItemHandler = () => {
     if (title.trim() !== "") {
-      addItem(title)
+      addItemCallback(title)
         .then(() => {
           setTitle("");
         })
@@ -41,6 +41,7 @@ export const AddItemForm = React.memo(function({ addItem, disabled = false }: Pr
       addItemHandler();
     }
   };
+
   return <div>
     <TextField variant="outlined"
                error={!!error}
