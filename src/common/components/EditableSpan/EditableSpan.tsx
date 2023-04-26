@@ -1,28 +1,28 @@
-import React, { ChangeEvent, useState } from 'react';
-import TextField from '@mui/material/TextField';
+import React, { ChangeEvent, FC, useState } from "react";
+import TextField from "@mui/material/TextField";
 
-type EditableSpanPropsType = {
-    value: string
-    onChange: (newValue: string) => void
+type Props = {
+  value: string
+  changeTitleCallback: (newValue: string) => void
 }
 
-export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
-    let [editMode, setEditMode] = useState(false);
-    let [title, setTitle] = useState(props.value);
+export const EditableSpan: FC<Props> = React.memo(({ value, changeTitleCallback }) => {
+  let [editMode, setEditMode] = useState(false);
+  let [title, setTitle] = useState(value);
 
-    const activateEditMode = () => {
-        setEditMode(true);
-        setTitle(props.value);
-    }
-    const activateViewMode = () => {
-        setEditMode(false);
-        props.onChange(title);
-    }
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
+  const activateEditMode = () => {
+    setEditMode(true);
+    setTitle(value);
+  };
 
-    return editMode
-        ? <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
-        : <span onDoubleClick={activateEditMode}>{props.value}</span>
+  const activateViewMode = () => {
+    setEditMode(false);
+    changeTitleCallback(title);
+  };
+
+  const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value);
+
+  return editMode
+    ? <TextField value={title} onChange={changeTitleHandler} autoFocus onBlur={activateViewMode} />
+    : <span onDoubleClick={activateEditMode}>{value}</span>;
 });

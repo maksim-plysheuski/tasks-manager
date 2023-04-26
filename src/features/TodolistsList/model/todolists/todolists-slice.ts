@@ -3,7 +3,7 @@ import { clearTasksAndTodolists } from "common/actions";
 import { RequestStatusType } from "app/app-slice";
 import { createAppAsyncThunk } from "common/utils";
 import { todolistsApi, TodolistType, UpdateTodolistTitleArgType } from "features/TodolistsList/api/todolists-api";
-import { ResultCode } from "common/enums/common.enums";
+import { ResultCode } from "common/enums/common-enums";
 
 
 const initialState: TodolistDomainType[] = [];

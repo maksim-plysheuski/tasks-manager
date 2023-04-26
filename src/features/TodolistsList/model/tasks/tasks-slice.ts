@@ -11,7 +11,7 @@ import {
 } from "features/TodolistsList/api/todolists-api";
 import { clearTasksAndTodolists } from "common/actions";
 import { appActions } from "app/app-slice";
-import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums/common.enums";
+import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums/common-enums";
 
 const initialState: TasksStateType = {};
 

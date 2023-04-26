@@ -4,7 +4,7 @@ import { Delete } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import Checkbox from "@mui/material/Checkbox";
 import { TaskType } from "features/TodolistsList/api/todolists-api";
-import { TaskStatuses } from "common/enums/common.enums";
+import { TaskStatuses } from "common/enums/common-enums";
 import { useActions } from "common/hooks";
 import { tasksThunks } from "features/TodolistsList/model/tasks/tasks-slice";
 import s from "./Task.module.css";
@@ -35,7 +35,7 @@ export const Task: FC<Props> = React.memo(({ task, todolistId }) => {
   return (
     <div key={task.id} className={task.status === TaskStatuses.Completed ? s.isDone : ""}>
       <Checkbox checked={task.status === TaskStatuses.Completed} color="primary" onChange={changeStatusHandler} />
-      <EditableSpan value={task.title} onChange={changeTitleHandler} />
+      <EditableSpan value={task.title} changeTitleCallback={changeTitleHandler} />
       <IconButton onClick={removeTaskHandler}>
         <Delete />
       </IconButton>

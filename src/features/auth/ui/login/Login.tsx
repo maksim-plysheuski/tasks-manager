@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material";
-import s from "./Login.module.css";
+import s from "features/auth/ui/login/Login.module.css";
 import { useLogin } from "features/auth/hooks/useLogin";
 
 

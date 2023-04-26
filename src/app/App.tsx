@@ -13,9 +13,9 @@ import { selectAppStatus, selectIsInitialized } from "./app-selectors";
 import { useSelector } from "react-redux";
 import { authThunks } from "features/auth/model/auth-slice";
 import { ErrorSnackbar } from "common/components";
-import { selectIsLoggedIn } from "features/auth/selectors/auth-selectors";
+import { selectIsLoggedIn } from "features/auth/model/auth-selectors";
 import { useActions } from "common/hooks/useActions";
-import { Login } from "features/auth/components/login/Login";
+import { Login } from "features/auth/ui/login/Login";
 
 
 function App() {

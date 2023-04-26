@@ -1,5 +1,5 @@
-import { instance } from "../../../common/api";
-import { BaseResponseType } from "../../../common/types";
+import { instance } from "common/api";
+import { BaseResponseType } from "common/types";
 
 export const authApi = {
   login(data: LoginParamsType) {

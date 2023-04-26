@@ -26,7 +26,7 @@ const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("app/in
   if (res.data.resultCode === ResultCode.Success) {
     return { isLoggedIn: true };
   } else {
-    return rejectWithValue(null);
+    return rejectWithValue(res.data);
   }
 });
 
@@ -46,7 +46,7 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("auth/logout",
     dispatch(clearTasksAndTodolists());
     return { isLoggedIn: false };
   } else {
-    return rejectWithValue(null);
+    return rejectWithValue(res.data);
   }
 });
 
