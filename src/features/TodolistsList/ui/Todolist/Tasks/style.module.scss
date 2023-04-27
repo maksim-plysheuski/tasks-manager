@@ -1,0 +1,15 @@
+@import "src/common/style/variables";
+
+.tasksContainer {
+  margin-top: 20px;
+  color: white;
+
+  p {
+    display: flex;
+    justify-content: center;
+    color: $primaryStyleColor;
+    font-style: italic;
+    margin: 0 0 10px 10px;
+    font-weight: 500;
+  }
+}

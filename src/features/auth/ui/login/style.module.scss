@@ -1,0 +1,33 @@
+@import "src/common/style/variables";
+
+.loginPage {
+  display: flex;
+  justify-content: center;
+
+  .formContainer {
+    padding: 15px;
+    height: max-content;
+    margin-top: 110px;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: $dark700;
+    border: 1px solid $dark500;
+    border-radius: 2px;
+  }
+
+  p {
+    position: absolute;
+    left: -10px;
+    top: 55px;
+  }
+
+  h2 {
+    color: $primaryStyleColor;
+  }
+
+  span {
+    color: $primaryFontColor;
+  }
+}

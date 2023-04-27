@@ -1,0 +1,12 @@
+@import "src/common/style/variables";
+
+.title {
+  color: $primaryFontColor;
+  word-break: break-all;
+  transition: color 250ms ease-in-out;
+
+  &:hover {
+    color: $primaryStyleColor;
+    cursor: pointer;
+  }
+}

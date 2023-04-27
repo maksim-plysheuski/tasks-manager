@@ -1,5 +1,9 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { FC } from "react";
 import TextField from "@mui/material/TextField";
+import s from "./style.module.scss";
+import { Tooltip, Zoom } from "@mui/material";
+import { inputStyle } from "common/style/style";
+import { useEditableSpan } from "common/components/EditableSpan/hooks/useEditableSpan";
 
 type Props = {
   value: string
@@ -7,22 +11,26 @@ type Props = {
 }
 
 export const EditableSpan: FC<Props> = React.memo(({ value, changeTitleCallback }) => {
-  let [editMode, setEditMode] = useState(false);
-  let [title, setTitle] = useState(value);
 
-  const activateEditMode = () => {
-    setEditMode(true);
-    setTitle(value);
-  };
-
-  const activateViewMode = () => {
-    setEditMode(false);
-    changeTitleCallback(title);
-  };
-
-  const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value);
+  const {
+    title, editMode,
+    changeTitleHandler,
+    activateEditMode,
+    activateViewMode,
+    onKeyUpHandler
+  } = useEditableSpan(changeTitleCallback, value);
 
   return editMode
-    ? <TextField value={title} onChange={changeTitleHandler} autoFocus onBlur={activateViewMode} />
-    : <span onDoubleClick={activateEditMode}>{value}</span>;
+    ? <TextField value={title} onChange={changeTitleHandler}
+                 onKeyUp={onKeyUpHandler}
+                 autoFocus onBlur={activateViewMode}
+                 sx={inputStyle} />
+    : <Tooltip title={"Change Title"}
+               arrow placement="top"
+               TransitionComponent={Zoom}
+               TransitionProps={{ timeout: 400 }}>
+          <span>
+         <span className={s.title} onClick={activateEditMode} onDoubleClick={activateEditMode}>{value}</span>
+          </span>
+    </Tooltip>;
 });

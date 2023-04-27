@@ -1,27 +1,34 @@
 import React, { FC } from "react";
 import { TaskStatuses } from "common/enums";
-import { TodolistDomainType } from "features/TodolistsList/model/todolists/todolists-slice";
-import { TaskType } from "features/TodolistsList/api/todolists-api";
-import { Task } from "features/TodolistsList/ui/Todolist/Tasks/Task/Task";
+import { TodolistDomain } from "features/TodolistsList/model/todolists/todolists-slice";
+import s from "./style.module.scss";
+import { Task } from "features/TodolistsList/api/tasks-api";
+import { SingleTask } from "features/TodolistsList/ui/Todolist/Tasks/SingleTask/SingleTask";
 
 type Props = {
-  todolist: TodolistDomainType;
-  tasks: TaskType[];
+  todolist: TodolistDomain;
+  tasks: Task[];
 };
 
 export const Tasks: FC<Props> = ({ tasks, todolist }) => {
   let tasksForTodolist = tasks;
 
-  if (todolist.filter === "active") {
-    tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.New);
-  }
-  if (todolist.filter === "completed") {
-    tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.Completed);
+  switch (todolist.filter) {
+    case "active": {
+      tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.New);
+      break;
+    }
+    case "completed": {
+      tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.Completed);
+      break;
+    }
   }
 
+  let mappedTasks = tasksForTodolist.map((t) => <SingleTask key={t.id} task={t} todolistId={todolist.id} />);
+
   return (
-    <div>
-      {tasksForTodolist.map((t) => <Task key={t.id} task={t} todolistId={todolist.id} />)}
+    <div className={s.tasksContainer}>
+      {mappedTasks.length ? <><p>THINGS TO DO:</p>{mappedTasks}</> : false}
     </div>
   );
 };

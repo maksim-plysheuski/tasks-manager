@@ -1,8 +1,11 @@
-import React, { ChangeEvent, FC, KeyboardEvent, useState } from "react";
+import React, { FC } from "react";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import { AddBox } from "@mui/icons-material";
-import { BaseResponseType } from "common/types";
+import s from "./style.module.scss";
+import { Tooltip, Zoom } from "@mui/material";
+import { iconStyle, inputStyle } from "common/style/style";
+import { useAddItem } from "common/components/AddItemForm/hook/useAddItem";
 
 type Props = {
   addItemCallback: (title: string) => Promise<any>
@@ -10,50 +13,29 @@ type Props = {
 }
 
 export const AddItemForm: FC<Props> = React.memo(({ addItemCallback, disabled = false }) => {
-  let [title, setTitle] = useState("");
-  let [error, setError] = useState<string | null>(null);
 
-  const addItemHandler = () => {
-    if (title.trim() !== "") {
-      addItemCallback(title)
-        .then(() => {
-          setTitle("");
-        })
-        .catch((err: BaseResponseType) => {
-          if (err?.resultCode) {
-            setError(err.messages[0]);
-          }
-        });
-    } else {
-      setError("Title is required");
-    }
-  };
+  const { title, error, onChangeHandler, addItemHandler, onKeyUpHandler } = useAddItem(addItemCallback);
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value);
-  };
-
-  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (error !== null) {
-      setError(null);
-    }
-    if (e.charCode === 13) {
-      addItemHandler();
-    }
-  };
-
-  return <div>
-    <TextField variant="outlined"
-               error={!!error}
-               value={title}
-               onChange={onChangeHandler}
-               onKeyPress={onKeyPressHandler}
-               label="Title"
-               helperText={error}
-               disabled={disabled}
-    />
-    <IconButton color="primary" onClick={addItemHandler} disabled={disabled}>
-      <AddBox />
-    </IconButton>
-  </div>;
+  return (
+    <div className={s.container}>
+      <TextField sx={inputStyle}
+                 error={!!error}
+                 value={title}
+                 onChange={onChangeHandler}
+                 onKeyUp={onKeyUpHandler}
+                 label={"Title"}
+                 helperText={error}
+                 disabled={disabled} />
+      <Tooltip title={"Add Item"}
+               arrow placement="top-start"
+               TransitionComponent={Zoom}
+               TransitionProps={{ timeout: 400 }}>
+          <span>
+        <IconButton sx={iconStyle} onClick={addItemHandler} disabled={disabled}>
+        <AddBox />
+      </IconButton>
+          </span>
+      </Tooltip>
+    </div>
+  );
 });

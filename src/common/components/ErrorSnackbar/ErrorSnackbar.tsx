@@ -1,6 +1,6 @@
-import * as React from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import * as React from "react";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useSelector } from "react-redux";
 import { selectAppError } from "app/app-selectors";
 import { appActions } from "app/app-slice";

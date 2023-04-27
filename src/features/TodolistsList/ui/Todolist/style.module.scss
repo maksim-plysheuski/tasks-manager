@@ -1,0 +1,17 @@
+@import "src/common/style/variables";
+
+.todolist {
+  background-color: $dark700;
+  height: max-content;
+  width: 300px;
+  margin: 30px 5px 0 0;
+  padding: 15px;
+  border: 1px solid $dark500;
+  border-radius: 5px;
+
+  .description {
+    margin-left: 50px;
+    color: $dark300;
+    font-weight: 700;
+  }
+}

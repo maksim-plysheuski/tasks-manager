@@ -2,11 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn, selectUserEmail } from "features/auth/model/auth-selectors";
 import { useActions } from "common/hooks";
-import { authThunks } from "features/auth/model/auth-slice";
+import { authThunks } from "features/auth/model/auth-reducer";
 import s from "./style.module.scss";
 import { useAppSelector } from "common/hooks/useAppSelector";
-import { Loader } from "common/components/AppHeader/Loader/Loader";
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
+import { Loader } from "common/components/AppHeader/Loader/Loader";
 
 
 export const AppHeader = () => {
@@ -15,18 +15,19 @@ export const AppHeader = () => {
   const userEmail = useAppSelector(selectUserEmail);
 
   const logoutHandler = () => logout();
+
   return (
     <header className={s.header}>
       <div className={s.headerContainer}>
         <div className={s.logoContainer}>
-          <ListAltRoundedIcon sx={{ color: "#e66300" }} fontSize={"large"} />
+          <ListAltRoundedIcon sx={{ color: "#16e0bd" }} fontSize={"large"} />
           <h3>Task Manager</h3>
         </div>
         {isLoggedIn && (
           <div>
-            <span>{userEmail}</span>
+            <span className={s.email}>{userEmail}</span>
             <button onClick={logoutHandler}>
-              Log out
+              LOG OUT
             </button>
           </div>
         )}

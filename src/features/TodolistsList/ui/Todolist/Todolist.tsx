@@ -2,20 +2,20 @@ import React, { FC, useCallback, useEffect } from "react";
 import { AddItemForm } from "common/components";
 import { tasksThunks } from "features/TodolistsList/model/tasks/tasks-slice";
 import { useActions } from "common/hooks";
-import { TodolistDomainType } from "features/TodolistsList/model/todolists/todolists-slice";
-import { TaskType } from "features/TodolistsList/api/todolists-api";
-import { FilterTasksButtons } from "features/TodolistsList/ui/Todolist/FilterTasksButtons/FilterTasksButtons";
-import { Tasks } from "features/TodolistsList/ui/Todolist/Tasks/Tasks";
-import { TodolistTitle } from "features/TodolistsList/ui/Todolist/TodolistTitle/TodolistTitle";
+import { TodolistDomain } from "features/TodolistsList/model/todolists/todolists-slice";
+import { Task } from "features/TodolistsList/api/tasks-api";
+import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons";
+import { Tasks } from "./Tasks/Tasks";
+import { TodolistTitle } from "./TodolistTitle/TodolistTitle";
+import s from "./style.module.scss";
 
 
 type Props = {
-  todolist: TodolistDomainType;
-  tasks: TaskType[];
+  todolist: TodolistDomain;
+  tasks: Task[];
 };
 
-
-export const Todolist: FC<Props> = React.memo(function({ todolist, tasks }) {
+export const Todolist: FC<Props> = React.memo(({ todolist, tasks }) => {
   const { fetchTasks, addTask } = useActions(tasksThunks);
 
   useEffect(() => {
@@ -23,16 +23,18 @@ export const Todolist: FC<Props> = React.memo(function({ todolist, tasks }) {
   }, []);
 
   const addTaskCallback = useCallback((title: string) => {
-    return addTask({ title, todolistId: todolist.id }).unwrap()
+    return addTask({ title, todolistId: todolist.id }).unwrap();
   }, [todolist.id]);
 
-
   return (
-    <div>
+    <div className={s.todolist}>
       <TodolistTitle todolist={todolist} />
-      <AddItemForm addItemCallback={addTaskCallback} disabled={todolist.entityStatus === "loading"} />
+      <AddItemForm addItemCallback={addTaskCallback}
+                   disabled={todolist.entityStatus === "loading"} />
       <Tasks tasks={tasks} todolist={todolist} />
-      <FilterTasksButtons todolist={todolist} />
+      {tasks.length
+        ? <FilterTasksButtons todolist={todolist} />
+        : <span className={s.description}>No tasks were found</span>}
     </div>
   );
 });

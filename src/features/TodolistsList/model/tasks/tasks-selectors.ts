@@ -1,4 +1,4 @@
-import { AppRootStateType } from "app/store";
+import { AppRootState } from "app/store";
 
 
-export const selectTasks = (state: AppRootStateType) => state.tasks;
+export const selectTasks = (state: AppRootState) => state.tasks;

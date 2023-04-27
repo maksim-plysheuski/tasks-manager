@@ -1,1 +1,1 @@
-export * from "common/enums/common-enums";
+export * from "./common-enums";

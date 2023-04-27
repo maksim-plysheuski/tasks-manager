@@ -3,10 +3,12 @@ import IconButton from "@mui/material/IconButton";
 import { Delete } from "@mui/icons-material";
 import React, { FC, useCallback } from "react";
 import { useActions } from "common/hooks";
-import { TodolistDomainType, todolistsThunks } from "features/TodolistsList/model/todolists/todolists-slice";
+import { TodolistDomain, todolistsThunks } from "features/TodolistsList/model/todolists/todolists-slice";
+import s from "./style.module.scss";
+import { iconStyle } from "common/style/style";
 
 type Props = {
-  todolist: TodolistDomainType;
+  todolist: TodolistDomain;
 };
 
 export const TodolistTitle: FC<Props> = ({ todolist }) => {
@@ -21,9 +23,9 @@ export const TodolistTitle: FC<Props> = ({ todolist }) => {
     }, [id]);
 
   return (
-    <h3>
+    <h3 className={s.title}>
       <EditableSpan value={title} changeTitleCallback={changeTodolistTitleHandler} />
-      <IconButton onClick={removeTodolistHandler} disabled={entityStatus === "loading"}>
+      <IconButton sx={iconStyle} onClick={removeTodolistHandler} disabled={entityStatus === "loading"}>
         <Delete />
       </IconButton>
     </h3>

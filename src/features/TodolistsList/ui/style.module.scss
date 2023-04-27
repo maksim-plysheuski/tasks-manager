@@ -1,0 +1,35 @@
+@import "src/common/style/variables";
+
+.todolistPage {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  width: 100%;
+
+  .pageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+  }
+
+  .addNewListBlock {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+    color: $dark300;
+
+    h4 {
+      align-self: self-start;
+    }
+  }
+
+  .listsBlock {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+}

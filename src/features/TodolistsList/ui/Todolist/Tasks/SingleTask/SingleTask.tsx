@@ -3,19 +3,21 @@ import { EditableSpan } from "common/components/EditableSpan/EditableSpan";
 import { Delete } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import Checkbox from "@mui/material/Checkbox";
-import { TaskType } from "features/TodolistsList/api/todolists-api";
+import { Task } from "features/TodolistsList/api/tasks-api";
 import { TaskStatuses } from "common/enums/common-enums";
 import { useActions } from "common/hooks";
 import { tasksThunks } from "features/TodolistsList/model/tasks/tasks-slice";
-import s from "./Task.module.css";
+import s from "./style.module.scss";
+import { Tooltip, Zoom } from "@mui/material";
+import { checkBoxStyle, iconStyle } from "common/style/style";
 
 
 type Props = {
-  task: TaskType;
+  task: Task;
   todolistId: string;
 };
 
-export const Task: FC<Props> = React.memo(({ task, todolistId }) => {
+export const SingleTask: FC<Props> = React.memo(({ task, todolistId }) => {
   const { removeTask, updateTask } = useActions(tasksThunks);
 
   const removeTaskHandler = () => removeTask({ taskId: task.id, todolistId });
@@ -33,12 +35,20 @@ export const Task: FC<Props> = React.memo(({ task, todolistId }) => {
   );
 
   return (
-    <div key={task.id} className={task.status === TaskStatuses.Completed ? s.isDone : ""}>
-      <Checkbox checked={task.status === TaskStatuses.Completed} color="primary" onChange={changeStatusHandler} />
+    <div key={task.id} className={`${s.allTasks} ${task.status === TaskStatuses.Completed ? s.CompletedTasks : ""} `}>
+      <Checkbox id={task.id} checked={task.status === TaskStatuses.Completed} sx={checkBoxStyle} color="warning"
+                onChange={changeStatusHandler} />
       <EditableSpan value={task.title} changeTitleCallback={changeTitleHandler} />
-      <IconButton onClick={removeTaskHandler}>
+      <Tooltip title={"Delete"}
+               arrow placement="right"
+               TransitionComponent={Zoom}
+               TransitionProps={{ timeout: 400 }}>
+          <span>
+        <IconButton sx={iconStyle} onClick={removeTaskHandler}>
         <Delete />
       </IconButton>
+          </span>
+      </Tooltip>
     </div>
   );
 });

@@ -1,16 +1,20 @@
 import { FormikHelpers, useFormik } from "formik";
-import { LoginParamsType } from "features/auth/api/auth-api";
-import { BaseResponseType } from "common/types";
+import { LoginParams } from "features/auth/api/auth-api";
+import { BaseResponse } from "common/types";
 import { useActions } from "common/hooks";
-import { authThunks } from "features/auth/model/auth-slice";
+import { authThunks } from "features/auth/model/auth-reducer";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "features/auth/model/auth-selectors";
+import { useState } from "react";
 
-type FormikErrorType = Partial<Omit<LoginParamsType, "captcha">>
+type FormikErrorType = Partial<Omit<LoginParams, "captcha">>
 
 export const useLogin = () => {
   const { login } = useActions(authThunks);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+
+  const showPasswordHandler = () => setShowPassword(state => !state);
 
   const formik = useFormik({
     validate: (values) => {
@@ -22,7 +26,7 @@ export const useLogin = () => {
       }
 
       if (!values.password) {
-        errors.password = "Field is required";
+        errors.password = "Password is required";
       } else if (values.password.length < 3) {
         errors.password = "Password must be 3 characters or more";
       }
@@ -34,10 +38,10 @@ export const useLogin = () => {
       password: "",
       rememberMe: false
     },
-    onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
+    onSubmit: (values, formikHelpers: FormikHelpers<LoginParams>) => {
       login(values)
         .unwrap()
-        .catch((reason: BaseResponseType) => {
+        .catch((reason: BaseResponse) => {
           reason.fieldsErrors?.forEach((fieldError) => {
             formikHelpers.setFieldError(fieldError.field, fieldError.error);
           });
@@ -45,5 +49,5 @@ export const useLogin = () => {
     }
   });
 
-  return { formik, isLoggedIn };
+  return { formik, isLoggedIn, showPassword, showPasswordHandler };
 };

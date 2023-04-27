@@ -1,50 +1,32 @@
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import { Menu } from "@mui/icons-material";
-import React, { useCallback, useEffect } from "react";
-import { TodolistsList } from "features/TodolistsList/ui/TodolistsList";
-import { CircularProgress, LinearProgress } from "@mui/material";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { selectAppStatus, selectIsInitialized } from "./app-selectors";
+import { CircularProgress } from "@mui/material";
+import { AppHeader, ErrorSnackbar, Routing } from "common/components";
+import { useActions } from "common/hooks";
+import { authThunks } from "features/auth/model/auth-reducer";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { authThunks } from "features/auth/model/auth-slice";
-import { ErrorSnackbar } from "common/components";
-import { selectIsLoggedIn } from "features/auth/model/auth-selectors";
-import { useActions } from "common/hooks/useActions";
-import { Login } from "features/auth/ui/login/Login";
-import { AppHeader } from "common/components/AppHeader/AppHeader";
-import { Routing } from "common/components/Routing/Routing";
+import { BrowserRouter } from "react-router-dom";
+import { selectIsAppInitialized } from "app/app-selectors";
+import { AppPreloader } from "common/components/AppPreloader/AppPreloader";
 
 
 function App() {
-  const isInitialized = useSelector(selectIsInitialized);
+  const isAppInitialized = useSelector(selectIsAppInitialized);
   const { initializeApp } = useActions(authThunks);
-
 
   useEffect(() => {
     initializeApp();
   }, []);
 
 
-  if (!isInitialized) {
-    return (
-      <div style={{ position: "fixed", top: "30%", textAlign: "center", width: "100%" }}>
-        <CircularProgress />
-      </div>
-    );
+  if (!isAppInitialized) {
+    return <AppPreloader />;
   }
 
   return (
     <BrowserRouter>
-      <div className="App">
-        <AppHeader/>
-        <Routing />
-        <ErrorSnackbar />
-      </div>
+      <AppHeader />
+      <Routing />
+      <ErrorSnackbar />
     </BrowserRouter>
   );
 }

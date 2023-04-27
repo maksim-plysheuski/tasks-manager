@@ -1,4 +1,4 @@
-import { AppRootStateType } from "app/store";
+import { AppRootState } from "app/store";
 
-export const selectIsLoggedIn = (state: AppRootStateType) => state.auth.isLoggedIn;
-export const selectUserEmail = (state: AppRootStateType) => state.auth.profile.email;
+export const selectIsLoggedIn = (state: AppRootState) => state.auth.isLoggedIn;
+export const selectUserEmail = (state: AppRootState) => state.auth.userProfile.email;
