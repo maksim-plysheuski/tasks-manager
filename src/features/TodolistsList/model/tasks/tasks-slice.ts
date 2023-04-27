@@ -13,13 +13,13 @@ import {
 } from "features/TodolistsList/api/tasks-api";
 
 
-export type TasksStateType = {
+export type TasksState = {
   [key: string]: Array<Task>;
 };
 
 const slice = createSlice({
   name: "tasks",
-  initialState: {} as TasksStateType,
+  initialState: {} as TasksState,
   reducers: {},
   extraReducers: (builder) => {
     builder
