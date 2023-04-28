@@ -146,7 +146,7 @@ test("title of specified task should be changed", () => {
 
 test("new array should be added when new todolist is added", () => {
   const todolist = {
-    id: "blabla",
+    id: "falseId",
     title: "new todolist",
     order: 0,
     addedDate: "",
