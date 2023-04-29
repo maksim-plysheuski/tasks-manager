@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { Button, Checkbox, FormControl, FormControlLabel, InputAdornment, TextField } from "@mui/material";
-import { useLogin } from "features/auth/ui/hooks/useLogin";
+import { useLogin } from "features/auth/ui/login/hooks/useLogin";
 import s from "./style.module.scss";
 import { DescriptionBlock } from "features/auth/ui/login/descriptionBlock/DescriptionBlock";
 import IconButton from "@mui/material/IconButton";

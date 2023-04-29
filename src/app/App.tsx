@@ -1,22 +1,21 @@
 import { CircularProgress } from "@mui/material";
 import { AppHeader, ErrorSnackbar, Routing } from "common/components";
 import { useActions } from "common/hooks";
-import { authThunks } from "features/auth/model/auth-reducer";
+import { authThunks } from "features/auth/model/authSlice";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { selectIsAppInitialized } from "app/app-selectors";
-import { AppPreloader } from "common/components/AppPreloader/AppPreloader";
+import { selectIsAppInitialized } from "app/appSelectors";
+import { AppPreloader } from "common/components/appPreloader/AppPreloader";
 
 
-function App() {
+export const App = () => {
   const isAppInitialized = useSelector(selectIsAppInitialized);
   const { initializeApp } = useActions(authThunks);
 
   useEffect(() => {
     initializeApp();
   }, []);
-
 
   if (!isAppInitialized) {
     return <AppPreloader />;
@@ -29,6 +28,4 @@ function App() {
       <ErrorSnackbar />
     </BrowserRouter>
   );
-}
-
-export default App;
+};
