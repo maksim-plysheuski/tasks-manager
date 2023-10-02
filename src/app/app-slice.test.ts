@@ -1,11 +1,7 @@
-import { appActions, appReducer, RequestStatusType } from "app/app-slice";
+import { appActions, appReducer } from "app/app-slice";
 
 
-let startState = {
-  status: "idle" as RequestStatusType,
-  error: null as string | null,
-  isInitialized: false as boolean
-};
+let startState = {} as ReturnType<typeof appReducer>
 
 beforeEach(() => {
   startState = { status: "idle", error: null, isInitialized: false };
