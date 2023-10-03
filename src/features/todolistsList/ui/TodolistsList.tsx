@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Todolist } from "features/todolistsList/ui/todolist/Todolist";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { todolistsThunks } from "features/todolistsList/model/todolists/todolistsSlice";
 import { selectIsLoggedIn } from "features/auth/model/authSelectors";
 import { selectTasks } from "features/todolistsList/model/tasks/tasksSelectors";
@@ -16,18 +16,20 @@ export const TodolistsList = () => {
   const todolists = useSelector(selectTodolists);
   const tasks = useSelector(selectTasks);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchTodolists();
-  }, []);
+    if (isLoggedIn) {
+      fetchTodolists();
+    } else {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
 
   const addTodolistCallback = useCallback((title: string) => {
     return addTodolist(title).unwrap();
   }, []);
 
-  if (!isLoggedIn) {
-    return <Navigate to={"/login"} />;
-  }
 
   return (
     <div className={s.todolistPage}>

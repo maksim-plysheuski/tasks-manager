@@ -10,16 +10,6 @@ import { AppPreloader } from "common/components/appPreloader/AppPreloader";
 
 
 export const App = () => {
-  const isAppInitialized = useSelector(selectIsAppInitialized);
-  const { initializeApp } = useActions(authThunks);
-
-  useEffect(() => {
-    initializeApp();
-  }, []);
-
-  if (!isAppInitialized) {
-    return <AppPreloader />;
-  }
 
   return (
     <HashRouter>
