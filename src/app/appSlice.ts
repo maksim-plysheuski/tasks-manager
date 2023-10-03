@@ -31,8 +31,7 @@ const slice = createSlice({
         state.status = "failed";
         if (action.payload) {
           if (action.type === "todo/addTodolist/rejected"
-            || action.type === "tasks/addTask/rejected"
-            || action.type === "app/initializeApp/rejected") return;
+            || action.type === "tasks/addTask/rejected") return;
           state.error = action.payload.messages[0];
         } else {
           state.error = action.error.message ? action.error.message : "Some error occurred";
