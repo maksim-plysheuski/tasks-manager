@@ -4,7 +4,7 @@ import { useActions } from "common/hooks";
 import { authThunks } from "features/auth/model/authSlice";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { selectIsAppInitialized } from "app/appSelectors";
 import { AppPreloader } from "common/components/appPreloader/AppPreloader";
 
@@ -22,10 +22,10 @@ export const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AppHeader />
       <Routing />
       <ErrorSnackbar />
-    </BrowserRouter>
+    </HashRouter>
   );
 };
