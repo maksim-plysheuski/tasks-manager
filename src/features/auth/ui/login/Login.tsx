@@ -3,18 +3,18 @@ import { Navigate } from "react-router-dom";
 import { Button, Checkbox, FormControl, FormControlLabel, InputAdornment, TextField } from "@mui/material";
 import { useLogin } from "features/auth/ui/login/hooks/useLogin";
 import s from "./style.module.scss";
-import { DescriptionBlock } from "features/auth/ui/login/descriptionBlock/DescriptionBlock";
 import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { btnStyle, iconStyle, inputStyle } from "common/style/style";
 
 
 export const Login = () => {
-  const { formik, isLoggedIn, showPassword, showPasswordHandler } = useLogin();
+  const { formik, isLoggedIn, showPassword, showPasswordHandler, testAccountLogin } = useLogin();
 
   if (isLoggedIn) {
     return <Navigate to={"/"} />;
   }
+
 
   return (
     <div className={s.loginPage}>
@@ -22,7 +22,6 @@ export const Login = () => {
         <h2 className={s.title}>Sign In</h2>
         <form onSubmit={formik.handleSubmit}>
           <FormControl className={s.from}>
-            <DescriptionBlock />
             <TextField
               sx={{ ...inputStyle, mt: 2 }}
               id="email"
@@ -55,6 +54,7 @@ export const Login = () => {
                               control={<Checkbox sx={iconStyle} {...formik.getFieldProps("rememberMe")}
                                                  checked={formik.values.rememberMe} />} />
             <Button type={"submit"} sx={{ ...btnStyle, border: 1, mt: 2 }}>Login</Button>
+            <Button sx={{ ...btnStyle, border: 1, mt: 2 }} onClick={testAccountLogin}>Use test account</Button>
           </FormControl>
         </form>
       </div>

@@ -49,5 +49,9 @@ export const useLogin = () => {
     }
   });
 
-  return { formik, isLoggedIn, showPassword, showPasswordHandler };
+  const testAccountLogin = () => {
+    login({email: "free@samuraijs.com", password: 'free', rememberMe: true})
+  }
+
+  return { formik, isLoggedIn, showPassword, showPasswordHandler, testAccountLogin };
 };
